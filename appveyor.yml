@@ -1,0 +1,43 @@
+environment:
+  QTDIR: C:\Qt\5.5\mingw492_32
+  MINGW: C:\Qt\Tools\mingw492_32
+  BOOST_ROOT: c:\Libraries\boost
+  BOOST_LIBRARYDIR: c:\Libraries\boost\stage\lib
+  JAMOMA_ROOT: c:\Jamoma
+  CHOCO_PATH: c:\ProgramData\chocolatey\bin
+  CMAKE_PATH: c:\projects\i-score\cmake-3.4.1-win32-x86
+
+configuration: Release
+
+install:
+  - appveyor DownloadFile "https://www.dropbox.com/s/wfzjuyt6nu73e7p/JamomaCore-0.6-dev-win32.exe?dl=1" -FileName Jamoma.exe
+  - Jamoma.exe /S /D=%JAMOMA_ROOT%
+  - appveyor DownloadFile "https://unsis.googlecode.com/files/nsis-2.46.5-Unicode-setup.exe" -FileName nsis.exe
+  - nsis.exe /S
+  - appveyor DownloadFile "https://cmake.org/files/v3.4/cmake-3.4.1-win32-x86.zip"
+  - 7z x cmake-3.4.1-win32-x86.zip -y > nul
+
+build_script:
+  - git submodule update --init
+  - mkdir build
+  - cd build
+  - set PATH=%CMAKE_PATH%\bin;%QTDIR%\bin;%MINGW%\bin;C:\Qt\Tools\QtCreator\bin
+  - cmake -G"MinGW Makefiles" -DISCORE_CONFIGURATION=appveyor-mingw-static-release  ..
+ # -DCMAKE_PREFIX_PATH="%QTDIR%/lib/cmake/Qt5;%JAMOMA_ROOT%\share\cmake\jamoma" -DBOOST_ROOT="%BOOST_ROOT%" -DBOOST_LIBRARYDIR="%BOOST_LIBRARYDIR%"
+  - mingw32-make -j2
+  - cpack
+
+artifacts:
+  - name: Installer
+    path: 'build/i-score-*-win32.exe'
+
+deploy:
+  release: $(APPVEYOR_REPO_TAG_NAME)
+  provider: GitHub
+  artifact: /.*\.exe/
+  auth_token:
+    secure: j0nBV9xVItdG3j6d0gHoyvrzi7TOhAy9/QIeyCbFeP8PTqq7DPr1oYwL5WIkPaXe
+  draft: false
+  prerelease: false
+  on:
+    appveyor_repo_tag: true
