@@ -7,7 +7,7 @@ git submodule update --init --recursive
 
 case "$TRAVIS_OS_NAME" in
   linux)
-    sudo apt install libvtk6-dev
+    sudo apt-get -y install libvtk6-dev
   ;;
   osx)
     set +e
