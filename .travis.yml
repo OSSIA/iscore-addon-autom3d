@@ -41,7 +41,7 @@ matrix:
 #      env: CONFIG=linux-coverity CAN_DEPLOY=False
 
 before_install:
-- cd .. && git clone https://github.com/OSSIA/i-score --depth=1 -b master && cd i-score && git submodule update --init --recursive && cp -rf iscore-addon-autom3d base/addons
+- cd .. && git clone https://github.com/OSSIA/i-score --depth=1 -b master && cd i-score && git submodule update --init --recursive && cp -rf ../iscore-addon-autom3d base/addons
 - pwd
 - cd ../i-score && "base/addons/iscore-addon-autom3d/tools/travis/deps.sh"
 
