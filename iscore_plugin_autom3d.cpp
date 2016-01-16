@@ -21,13 +21,13 @@
 #include <Autom3D/Executor/ComponentFactory.hpp>
 #include <OSSIA/Executor/DocumentPlugin.hpp>
 
-iscore_plugin_autom3D::iscore_plugin_autom3D() :
+iscore_plugin_autom3d::iscore_plugin_autom3d() :
     QObject {}
 {
 }
 
 
-std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3D::factories(
+std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3d::factories(
         const iscore::ApplicationContext& ctx,
         const iscore::FactoryBaseKey& key) const
 {
@@ -47,7 +47,7 @@ std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3D
     >>(ctx, key);
 }
 
-std::pair<const CommandParentFactoryKey, CommandGeneratorMap> iscore_plugin_autom3D::make_commands()
+std::pair<const CommandParentFactoryKey, CommandGeneratorMap> iscore_plugin_autom3d::make_commands()
 {
     using namespace Autom3D;
     std::pair<const CommandParentFactoryKey, CommandGeneratorMap> cmds{CommandFactoryName(), CommandGeneratorMap{}};

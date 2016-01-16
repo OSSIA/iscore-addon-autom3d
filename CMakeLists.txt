@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.1)
 project(iscore_plugin_autom3d LANGUAGES CXX)
 
+###  General initialization of always necessary stuff (AUTOMOC, etc) ###
 iscore_common_setup()
 
+### Requirements ###
 if(NOT TARGET iscore_plugin_ossia)
     return()
 endif()
 
-# Packages
 find_package(Qt5 5.3 REQUIRED COMPONENTS Core Widgets)
 
 find_package(VTK COMPONENTS
@@ -21,7 +22,7 @@ if(NOT ${VTK_FOUND})
 endif()
 include(${VTK_USE_FILE})
 
-# Files & main target
+### Files & main target ###
 file(GLOB_RECURSE HDRS
     "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/*.hpp"
 )
@@ -72,6 +73,7 @@ qt5_add_resources(QRCS "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Resources/Autom3DRes
 
 add_library(${PROJECT_NAME} ${SRCS} ${HDRS} ${QRCS})
 
+### If there are commands this will generate the files showcased in iscore_plugin_autom3d.cpp ###
 iscore_generate_command_list_file(${PROJECT_NAME} "${HDRS}")
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -83,4 +85,5 @@ if(TARGET iscore_lib_inspector)
     target_link_libraries(${PROJECT_NAME} PRIVATE iscore_lib_inspector)
 endif()
 
+### Setup of the target ###
 setup_iscore_plugin(${PROJECT_NAME})

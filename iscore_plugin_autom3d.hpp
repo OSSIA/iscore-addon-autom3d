@@ -10,7 +10,7 @@
 #include <iscore/command/SerializableCommand.hpp>
 #include <iscore/plugins/customfactory/FactoryInterface.hpp>
 
-class iscore_plugin_autom3D final :
+class iscore_plugin_autom3d final :
         public QObject,
         public iscore::FactoryInterface_QtInterface,
         public iscore::CommandFactory_QtInterface
@@ -23,8 +23,8 @@ class iscore_plugin_autom3D final :
                 )
 
     public:
-        iscore_plugin_autom3D();
-        virtual ~iscore_plugin_autom3D() = default;
+        iscore_plugin_autom3d();
+        virtual ~iscore_plugin_autom3d() = default;
 
         // Process & inspector
         std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> factories(
