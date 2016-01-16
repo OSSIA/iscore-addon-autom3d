@@ -41,6 +41,7 @@ matrix:
 #      env: CONFIG=linux-coverity CAN_DEPLOY=False
 
 before_install:
+- sh -c 'gcc -march=native -Q --help=target | grep march'
 - cd .. && git clone https://github.com/OSSIA/i-score --depth=1 -b master && cd i-score && git submodule update --init --recursive && cp -rf ../iscore-addon-autom3d base/addons/
 - pwd
 - cd ../i-score && ls base && ls base/addons && ls base/addons/iscore-addon-autom3d &&  bash -c "base/addons/iscore-addon-autom3d/tools/travis/deps.sh"
