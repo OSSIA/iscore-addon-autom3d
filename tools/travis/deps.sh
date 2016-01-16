@@ -7,11 +7,12 @@ git submodule update --init --recursive
 
 case "$TRAVIS_OS_NAME" in
   linux)
-    sudo apt-get -y install libvtk6-dev
+    wget https://www.dropbox.com/s/lavj7413vfgrign/vtk_6.3-1_amd64.deb?dl=1 -O vtk.deb
+    sudo dpkg -i vtk.deb
   ;;
   osx)
     set +e
-    brew install homebrew/scicence/vtk 
+    brew install homebrew/science/vtk
     set -e
   ;;
 esac
