@@ -20,7 +20,6 @@ find_package(VTK COMPONENTS
 if(NOT ${VTK_FOUND})
     return()
 endif()
-include(${VTK_USE_FILE})
 
 ### Files & main target ###
 file(GLOB_RECURSE HDRS
@@ -79,11 +78,16 @@ iscore_generate_command_list_file(${PROJECT_NAME} "${HDRS}")
 target_link_libraries(${PROJECT_NAME} PRIVATE
                      Qt5::Core Qt5::Widgets
                      iscore_lib_base iscore_lib_device iscore_plugin_deviceexplorer iscore_lib_process iscore_lib_state  iscore_plugin_ossia iscore_lib_dummyprocess
-                     ${VTK_LIBRARIES} )
+                     )
 
 if(TARGET iscore_lib_inspector)
     target_link_libraries(${PROJECT_NAME} PRIVATE iscore_lib_inspector)
 endif()
+
+### Vtk set-up ###
+target_compile_definitions(${PROJECT_NAME} PRIVATE "${VTK_DEFINITIONS}")
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE  ${VTK_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${VTK_LIBRARIES})
 
 ### Setup of the target ###
 setup_iscore_plugin(${PROJECT_NAME})
