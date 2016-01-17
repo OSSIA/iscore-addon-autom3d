@@ -8,7 +8,11 @@
 
 class vtkParametricSpline;
 class DeviceDocumentPlugin;
+
+namespace Device
+{
 class DeviceList;
+}
 namespace State
 {
 struct Address;
@@ -35,7 +39,7 @@ class ProcessExecutor final :
         ProcessExecutor(
                 const State::Address& addr,
                 const std::vector<Point>& spline,
-                const DeviceList& devices);
+                const Device::DeviceList& devices);
         ~ProcessExecutor();
 
         std::shared_ptr<OSSIA::StateElement> state(
@@ -53,7 +57,7 @@ class ProcessExecutor final :
         }
 
     private:
-        const DeviceList& m_devices;
+        const Device::DeviceList& m_devices;
 
         std::shared_ptr<OSSIA::State> m_start;
         std::shared_ptr<OSSIA::State> m_end;

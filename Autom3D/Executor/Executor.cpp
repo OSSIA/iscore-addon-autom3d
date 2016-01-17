@@ -16,7 +16,7 @@ namespace Executor
 ProcessExecutor::ProcessExecutor(
         const State::Address& addr,
         const std::vector<Point>& spline,
-        const DeviceList& devices):
+        const Device::DeviceList& devices):
     m_devices{devices},
     m_start{OSSIA::State::create()},
     m_end{OSSIA::State::create()},
@@ -28,7 +28,7 @@ ProcessExecutor::ProcessExecutor(
     if(dev_it == devices.devices().end())
         return;
 
-    auto dev = dynamic_cast<OSSIADevice*>(*dev_it);
+    auto dev = dynamic_cast<Ossia::OSSIADevice*>(*dev_it);
     if(!dev)
         return;
 
