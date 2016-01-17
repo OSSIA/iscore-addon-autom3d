@@ -33,6 +33,8 @@ InspectorWidget::InspectorWidget(
     ProcessInspectorWidgetDelegate_T {autom3DModel, parent},
     m_dispatcher{doc.commandStack}
 {
+
+    using namespace DeviceExplorer;
     setObjectName("Autom3DInspectorWidget");
     setParent(parent);
 

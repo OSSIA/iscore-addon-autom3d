@@ -14,8 +14,11 @@ namespace State
 {
 struct Address;
 }
+namespace DeviceExplorer
+{
 class AddressEditWidget;
 class DeviceExplorerModel;
+}
 class QDoubleSpinBox;
 
 namespace Autom3D
@@ -34,7 +37,7 @@ class InspectorWidget final :
         void on_addressChange(const ::State::Address& newText);
 
     private:
-        AddressEditWidget* m_lineEdit{};
+        DeviceExplorer::AddressEditWidget* m_lineEdit{};
 
         CommandDispatcher<> m_dispatcher;
 };
