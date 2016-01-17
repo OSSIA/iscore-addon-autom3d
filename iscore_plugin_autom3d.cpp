@@ -37,7 +37,7 @@ std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3d
         FW<Process::ProcessFactory,
              Autom3D::ProcessFactory>,
 #if defined(ISCORE_LIB_INSPECTOR)
-        FW<InspectorWidgetFactory,
+        FW<Inspector::InspectorWidgetFactory,
              Autom3D::StateInspectorFactory>,
 #endif
         FW<ProcessInspectorWidgetDelegateFactory,
