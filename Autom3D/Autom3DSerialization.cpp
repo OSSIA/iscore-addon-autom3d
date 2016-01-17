@@ -95,33 +95,45 @@ void Visitor<Writer<DataStream>>::writeTo(Autom3D::ProcessModel& autom)
 }
 
 
+template<>
+void Visitor<Reader<JSONValue>>::readFrom(const Autom3D::Point& pt)
+{
+    QJsonArray arr;
+    arr.push_back(pt.x());
+    arr.push_back(pt.y());
+    arr.push_back(pt.z());
+    val = arr;
+}
 
+template<>
+void Visitor<Writer<JSONValue>>::writeTo(Autom3D::Point& pt)
+{
+    QJsonArray arr = val.toArray();
+    pt = Autom3D::Point(arr[0].toDouble(), arr[1].toDouble(), arr[2].toDouble());
+}
 
 template<>
 void Visitor<Reader<JSONObject>>::readFrom(const Autom3D::ProcessModel& autom)
 {
-    ISCORE_TODO;
-    /*
     m_obj["PluginsMetadata"] = toJsonValue(*autom.pluginModelList);
 
     m_obj["Address"] = toJsonObject(autom.address());
-    m_obj["Min"] = autom.min();
-    m_obj["Max"] = autom.max();
-    */
+    m_obj["Min"] = toJsonValue(autom.min());
+    m_obj["Max"] = toJsonValue(autom.max());
+    m_obj["Handles"] = toJsonValueArray(autom.handles());
 }
 
 template<>
 void Visitor<Writer<JSONObject>>::writeTo(Autom3D::ProcessModel& autom)
 {
-    ISCORE_TODO;
-    /*
     Deserializer<JSONValue> elementPluginDeserializer(m_obj["PluginsMetadata"]);
     autom.pluginModelList = new iscore::ElementPluginModelList{elementPluginDeserializer, &autom};
 
     autom.setAddress(fromJsonObject<State::Address>(m_obj["Address"].toObject()));
-    autom.setMin(m_obj["Min"].toDouble());
-    autom.setMax(m_obj["Max"].toDouble());
-    */
+    autom.setMin(fromJsonValue<Autom3D::Point>(m_obj["Min"]));
+    autom.setMax(fromJsonValue<Autom3D::Point>(m_obj["Max"]));
+
+    autom.setHandles(fromJsonValueArray<std::vector<Autom3D::Point>>(m_obj["Handles"].toArray()));
 }
 
 
