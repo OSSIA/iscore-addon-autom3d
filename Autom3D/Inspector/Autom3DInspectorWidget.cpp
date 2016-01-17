@@ -24,6 +24,7 @@
 #include <iscore/tools/ModelPath.hpp>
 #include <iscore/tools/Todo.hpp>
 
+
 namespace Autom3D
 {
 InspectorWidget::InspectorWidget(
@@ -33,7 +34,6 @@ InspectorWidget::InspectorWidget(
     ProcessInspectorWidgetDelegate_T {autom3DModel, parent},
     m_dispatcher{doc.commandStack}
 {
-
     using namespace DeviceExplorer;
     setObjectName("Autom3DInspectorWidget");
     setParent(parent);
@@ -46,7 +46,7 @@ InspectorWidget::InspectorWidget(
     // If there is a DeviceExplorer in the current document, use it
     // to make a widget.
     // TODO instead of doing this, just make an address line edit factory.
-    auto plug = doc.findPlugin<DeviceDocumentPlugin>();
+    auto plug = doc.findPlugin<DeviceExplorer::DeviceDocumentPlugin>();
     DeviceExplorerModel* explorer{};
     if(plug)
         explorer = plug->updateProxy.deviceExplorer;
