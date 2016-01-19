@@ -18,7 +18,9 @@ ProcessComponent::ProcessComponent(
     auto proc = std::make_shared<ProcessExecutor>(
                 element.address(),
                 element.handles(),
-                ctx.devices.list());
+                ctx.devices.list(),
+                element.scale(),
+                element.origin());
     m_ossia_process = proc;
 }
 

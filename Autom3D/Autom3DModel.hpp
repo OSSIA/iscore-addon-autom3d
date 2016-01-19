@@ -93,11 +93,36 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
             emit handlesChanged();
         }
 
+        void setScale(Point p)
+        {
+            m_scale = p;
+            emit scaleChanged(p);
+        }
+
+        Point scale()
+        {
+            return m_scale;
+        }
+
+        void setOrigin(Point p)
+        {
+            m_origin = p;
+            emit originChanged(p);
+        }
+
+        Point origin()
+        {
+            return m_origin;
+        }
+
     signals:
         void addressChanged(const ::State::Address& arg);
 
         void minChanged(Point arg);
         void maxChanged(Point arg);
+
+        void scaleChanged(Point arg);
+        void originChanged(Point arg);
 
         void handlesChanged();
 
@@ -123,6 +148,9 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
 
         Point m_min{};
         Point m_max{};
+
+        Point m_scale{50, 50, 50};
+        Point m_origin{500, 500, 500};
 
         std::vector<Point> m_handles;
         ProcessState* m_startState{};

@@ -39,7 +39,9 @@ class ProcessExecutor final :
         ProcessExecutor(
                 const State::Address& addr,
                 const std::vector<Point>& spline,
-                const Device::DeviceList& devices);
+                const Device::DeviceList& devices,
+                Point scale,
+                Point origin);
         ~ProcessExecutor();
 
         std::shared_ptr<OSSIA::StateElement> state(
@@ -65,6 +67,8 @@ class ProcessExecutor final :
         std::shared_ptr<OSSIA::Address> m_addr;
 
         vtkParametricSpline* m_spline{};
+        Point m_scale;
+        Point m_origin;
 
 };
 

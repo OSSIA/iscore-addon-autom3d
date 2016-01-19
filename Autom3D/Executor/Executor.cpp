@@ -16,11 +16,15 @@ namespace Executor
 ProcessExecutor::ProcessExecutor(
         const State::Address& addr,
         const std::vector<Point>& spline,
-        const Device::DeviceList& devices):
+        const Device::DeviceList& devices,
+        Point scale,
+        Point origin):
     m_devices{devices},
     m_start{OSSIA::State::create()},
     m_end{OSSIA::State::create()},
-    m_spline{vtkParametricSpline::New()}
+    m_spline{vtkParametricSpline::New()},
+    m_scale{scale},
+    m_origin{origin}
 {
     // Load the address
     // Look for the real node in the device
@@ -69,9 +73,9 @@ std::shared_ptr<OSSIA::StateElement> ProcessExecutor::state(
 
         auto mess = OSSIA::Message::create(m_addr,
                                            new OSSIA::Tuple{
-                                               new OSSIA::Float{float(pt[0])},
-                                               new OSSIA::Float{float(pt[1])},
-                                               new OSSIA::Float{float(pt[2])}});
+                                               new OSSIA::Float{float(pt[0]) * m_scale.x() + m_origin.x()},
+                                               new OSSIA::Float{float(pt[1]) * m_scale.y() + m_origin.y()},
+                                               new OSSIA::Float{float(pt[2]) * m_scale.z() + m_origin.z()}});
 
         st->stateElements().push_back(std::move(mess));
     }
