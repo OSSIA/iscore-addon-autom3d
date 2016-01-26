@@ -34,4 +34,9 @@ const QList<QString>&StateInspectorFactory::key_impl() const
     static const QList<QString> lst{"Autom3DState"};
     return lst;
 }
+
+bool StateInspectorFactory::matches(const QObject& object) const
+{
+    return dynamic_cast<const Autom3D::ProcessState*>(&object);
+}
 }
