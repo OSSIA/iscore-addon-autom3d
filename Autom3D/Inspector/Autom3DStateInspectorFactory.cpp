@@ -26,12 +26,13 @@ Inspector::InspectorWidgetBase* StateInspectorFactory::makeWidget(
     return new StateInspectorWidget{
                 safe_cast<const ProcessState&>(sourceElement),
                 doc,
-                parent};
+                        parent};
 }
 
-const QList<QString>&StateInspectorFactory::key_impl() const
+bool StateInspectorFactory::matches(
+        const QObject& object) const
 {
-    static const QList<QString> lst{"Autom3DState"};
-    return lst;
+    return dynamic_cast<const ProcessState*>(&object);
 }
+
 }

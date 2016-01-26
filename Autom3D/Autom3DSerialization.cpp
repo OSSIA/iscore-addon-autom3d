@@ -12,55 +12,33 @@
 #include <iscore/serialization/VisitorCommon.hpp>
 #include <iscore/tools/std/StdlibWrapper.hpp>
 
-namespace Process { class LayerModel; }
-class QObject;
-struct VisitorVariant;
-template <typename T> class Reader;
-template <typename T> class Writer;
-template<typename T>
-void readFrom_vector_obj_impl_ds(
-        Visitor<Reader<DataStream>>& reader,
-        const std::vector<T>& vec)
+template<>
+struct TSerializer<DataStream, std::vector<QVector3D>>
 {
-    reader.m_stream << (int32_t)vec.size();
-    for(const auto& elt : vec)
-        reader.m_stream << elt;
-
-    reader.insertDelimiter();
-}
-
-template<typename T>
-void writeTo_vector_obj_impl_ds(
-        Visitor<Writer<DataStream>>& writer,
-        std::vector<T>& vec)
-{
-    int32_t n = 0;
-    writer.m_stream >> n;
-
-    vec.clear();
-    vec.resize(n);
-    for(int i = 0; i < n; i++)
+    static void readFrom(
+            DataStream::Serializer& s,
+            const std::vector<QVector3D>& vec)
     {
-        writer.m_stream >> vec[i];
+        s.stream() << (int32_t)vec.size();
+        for(const auto& elt : vec)
+            s.stream() << elt;
     }
 
-    writer.checkDelimiter();
-}
+    static void writeTo(
+            DataStream::Deserializer& s,
+            std::vector<QVector3D>& vec)
+    {
+        int32_t n = 0;
+        s.stream() >> n;
 
-template<>
-void Visitor<Reader<DataStream>>::readFrom(
-        const std::vector<Autom3D::Point>& segmt)
-{
-    readFrom_vector_obj_impl_ds(*this, segmt);
-}
-
-template<>
-void Visitor<Writer<DataStream>>::writeTo(
-        std::vector<Autom3D::Point>& segmt)
-{
-    writeTo_vector_obj_impl_ds(*this, segmt);
-}
-
+        vec.clear();
+        vec.resize(n);
+        for(int i = 0; i < n; i++)
+        {
+            s.stream() >> vec[i];
+        }
+    }
+};
 
 template<>
 void Visitor<Reader<DataStream>>::readFrom(const Autom3D::ProcessModel& autom)

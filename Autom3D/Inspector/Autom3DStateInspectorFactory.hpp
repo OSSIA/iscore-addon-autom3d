@@ -12,8 +12,10 @@ class Document;
 
 namespace Autom3D
 {
-class StateInspectorFactory final : public Inspector::InspectorWidgetFactory
+class StateInspectorFactory final :
+        public Inspector::InspectorWidgetFactory
 {
+        ISCORE_CONCRETE_FACTORY_DECL("77a6b896-2a29-4014-8156-fdb410408fea")
     public:
         StateInspectorFactory();
 
@@ -22,7 +24,7 @@ class StateInspectorFactory final : public Inspector::InspectorWidgetFactory
                 const iscore::DocumentContext& doc,
                 QWidget* parent) const override;
 
-        const QList<QString>& key_impl() const override;
+        bool matches(const QObject& object) const override;
 };
 
 }
