@@ -60,7 +60,7 @@ Process::ProcessModel* ProcessModel::clone(
 
 const ProcessFactoryKey& ProcessModel::key() const
 {
-    return ProcessMetadata::factoryKey();
+    return ProcessMetadata::concreteFactoryKey();
 }
 
 QString ProcessModel::prettyName() const

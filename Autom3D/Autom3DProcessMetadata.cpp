@@ -6,9 +6,9 @@
 
 namespace Autom3D
 {
-const ProcessFactoryKey& ProcessMetadata::factoryKey()
+const ProcessFactoryKey& ProcessMetadata::concreteFactoryKey()
 {
-    static const ProcessFactoryKey name{"Autom3D"};
+    static const ProcessFactoryKey name{"7a460ae5-2dd1-4e51-aeaf-d8f304dc433c"};
     return name;
 }
 

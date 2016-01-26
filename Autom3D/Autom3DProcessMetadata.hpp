@@ -7,7 +7,7 @@ namespace Autom3D
 {
 struct ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessMetadata
 {
-        static const ProcessFactoryKey& factoryKey();
+        static const ProcessFactoryKey& concreteFactoryKey();
 
         static QString processObjectName();
 
