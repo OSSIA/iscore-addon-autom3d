@@ -41,7 +41,7 @@ struct TSerializer<DataStream, std::vector<QVector3D>>
 };
 
 template<>
-void Visitor<Reader<DataStream>>::readFrom(const Autom3D::ProcessModel& autom)
+void Visitor<Reader<DataStream>>::readFrom_impl(const Autom3D::ProcessModel& autom)
 {
     readFrom(*autom.pluginModelList);
 
@@ -91,7 +91,7 @@ void Visitor<Writer<JSONValue>>::writeTo(Autom3D::Point& pt)
 }
 
 template<>
-void Visitor<Reader<JSONObject>>::readFrom(const Autom3D::ProcessModel& autom)
+void Visitor<Reader<JSONObject>>::readFrom_impl(const Autom3D::ProcessModel& autom)
 {
     m_obj["PluginsMetadata"] = toJsonValue(*autom.pluginModelList);
 
@@ -118,7 +118,7 @@ void Visitor<Writer<JSONObject>>::writeTo(Autom3D::ProcessModel& autom)
 // Dynamic stuff
 namespace Autom3D
 {
-void ProcessModel::serialize(const VisitorVariant& vis) const
+void ProcessModel::serialize_impl(const VisitorVariant& vis) const
 {
     serialize_dyn(vis, *this);
 }

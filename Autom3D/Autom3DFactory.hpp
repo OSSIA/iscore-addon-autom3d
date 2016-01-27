@@ -9,7 +9,7 @@
 #include <DummyProcess/DummyLayerView.hpp>
 namespace Autom3D
 {
-class ProcessFactory: public Process::ProcessFactory
+class ProcessFactory final : public Process::ProcessFactory
 {
     public:
         QString prettyName() const override
@@ -36,7 +36,7 @@ class ProcessFactory: public Process::ProcessFactory
             return {};
         }
 
-        Process::ProcessModel* loadModel(const VisitorVariant& vis, QObject* parent) override
+        Process::ProcessModel* load(const VisitorVariant& vis, QObject* parent) override
         {
             return deserialize_dyn(vis, [&] (auto&& deserializer)
             { return new Autom3D::ProcessModel{deserializer, parent};});

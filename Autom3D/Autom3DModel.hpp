@@ -50,7 +50,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         }
 
         //// ProcessModel ////
-        const ProcessFactoryKey& key() const override;
+        ProcessFactoryKey concreteFactoryKey() const override;
 
         QString prettyName() const override;
 
@@ -66,7 +66,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         void setDurationAndGrow(const TimeValue& newDuration) override;
         void setDurationAndShrink(const TimeValue& newDuration) override;
 
-        void serialize(const VisitorVariant& vis) const override;
+        void serialize_impl(const VisitorVariant& vis) const override;
 
         /// States
         ProcessState* startStateData() const override;
