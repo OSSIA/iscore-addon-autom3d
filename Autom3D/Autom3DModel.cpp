@@ -22,7 +22,7 @@ ProcessModel::ProcessModel(
         const TimeValue& duration,
         const Id<Process::ProcessModel>& id,
         QObject* parent) :
-    Process::ProcessModel {duration, id, ProcessMetadata::processObjectName(), parent},
+    Process::ProcessModel {duration, id, Metadata<ObjectKey_k, ProcessModel>::get(), parent},
     m_startState{new ProcessState{*this, 0., this}},
     m_endState{new ProcessState{*this, 1., this}}
 {
@@ -38,7 +38,7 @@ ProcessModel::ProcessModel(
         const ProcessModel& source,
         const Id<Process::ProcessModel>& id,
         QObject* parent):
-    Process::ProcessModel {source, id, ProcessMetadata::processObjectName(), parent},
+    Process::ProcessModel {source, id, Metadata<ObjectKey_k, ProcessModel>::get(), parent},
     m_address(source.address()),
     m_min{source.min()},
     m_max{source.max()},
@@ -60,7 +60,7 @@ Process::ProcessModel* ProcessModel::clone(
 
 const ProcessFactoryKey& ProcessModel::key() const
 {
-    return ProcessMetadata::concreteFactoryKey();
+    return Metadata<ConcreteFactoryKey_k, ProcessModel>::get();
 }
 
 QString ProcessModel::prettyName() const

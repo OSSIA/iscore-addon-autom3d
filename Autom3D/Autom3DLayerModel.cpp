@@ -8,7 +8,6 @@
 class QObject;
 #include <iscore/tools/SettableIdentifier.hpp>
 
-ISCORE_METADATA_IMPL(Autom3D::LayerModel)
 // TODO refactor with mapping ?
 namespace Autom3D
 {
@@ -16,7 +15,7 @@ LayerModel::LayerModel(
             ProcessModel& model,
             const Id<Process::LayerModel>& id,
             QObject* parent) :
-    Process::LayerModel {id, LayerModel::className.c_str(), model, parent}
+    Process::LayerModel {id, Metadata<ObjectKey_k, LayerModel>::get(), model, parent}
 {
 
 }
@@ -26,7 +25,7 @@ LayerModel::LayerModel(
             ProcessModel& model,
             const Id<Process::LayerModel>& id,
             QObject* parent) :
-    Process::LayerModel {id, LayerModel::className.c_str(), model, parent}
+    Process::LayerModel {id, Metadata<ObjectKey_k, LayerModel>::get(), model, parent}
 {
     // Nothing to copy
 }

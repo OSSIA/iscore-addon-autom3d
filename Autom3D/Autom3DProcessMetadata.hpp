@@ -1,16 +1,17 @@
 #pragma once
-#include <Process/ProcessFactoryKey.hpp>
+#include <Process/ProcessMetadata.hpp>
 #include <QString>
 #include <iscore_plugin_autom3d_export.h>
 
 namespace Autom3D
 {
-struct ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessMetadata
-{
-        static const ProcessFactoryKey& concreteFactoryKey();
-
-        static QString processObjectName();
-
-        static QString factoryPrettyName();
-};
+class ProcessModel;
 }
+
+PROCESS_METADATA(
+        ISCORE_PLUGIN_AUTOM3D_EXPORT,
+        Autom3D::ProcessModel,
+        "7a460ae5-2dd1-4e51-aeaf-d8f304dc433c",
+        "Autom3D",
+        "Autom3D"
+        )

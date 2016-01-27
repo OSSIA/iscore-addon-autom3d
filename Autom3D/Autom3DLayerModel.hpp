@@ -13,7 +13,6 @@ namespace Autom3D
 class ProcessModel;
 class LayerModel final : public Process::LayerModel
 {
-        ISCORE_METADATA(Autom3D::LayerModel)
     public:
         LayerModel(
                 ProcessModel& model,
@@ -44,3 +43,5 @@ class LayerModel final : public Process::LayerModel
         const ProcessModel& model() const;
 };
 }
+
+DEFAULT_MODEL_METADATA(Autom3D::LayerModel, "3D Automation Layer")
