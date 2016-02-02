@@ -26,6 +26,11 @@ iscore_plugin_autom3d::iscore_plugin_autom3d() :
 {
 }
 
+iscore_plugin_autom3d::~iscore_plugin_autom3d()
+{
+
+}
+
 
 std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3d::factories(
         const iscore::ApplicationContext& ctx,
@@ -59,3 +64,14 @@ std::pair<const CommandParentFactoryKey, CommandGeneratorMap> iscore_plugin_auto
 
     return cmds;
 }
+
+int32_t iscore_plugin_autom3d::version() const
+{
+    return 1;
+}
+
+UuidKey<iscore::Plugin> iscore_plugin_autom3d::key() const
+{
+    return "21f2eee9-5958-401d-a456-2e07b48063fb";
+}
+
