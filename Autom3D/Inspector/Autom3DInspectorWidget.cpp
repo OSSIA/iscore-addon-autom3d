@@ -34,7 +34,7 @@ InspectorWidget::InspectorWidget(
     ProcessInspectorWidgetDelegate_T {autom3DModel, parent},
     m_dispatcher{doc.commandStack}
 {
-    using namespace DeviceExplorer;
+    using namespace Explorer;
     setObjectName("Autom3DInspectorWidget");
     setParent(parent);
 
@@ -46,7 +46,7 @@ InspectorWidget::InspectorWidget(
     // If there is a DeviceExplorer in the current document, use it
     // to make a widget.
     // TODO instead of doing this, just make an address line edit factory.
-    auto plug = doc.findPlugin<DeviceExplorer::DeviceDocumentPlugin>();
+    auto plug = doc.findPlugin<Explorer::DeviceDocumentPlugin>();
     DeviceExplorerModel* explorer{};
     if(plug)
         explorer = plug->updateProxy.deviceExplorer;

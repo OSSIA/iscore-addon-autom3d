@@ -14,7 +14,7 @@ namespace State
 {
 struct Address;
 }
-namespace DeviceExplorer
+namespace Explorer
 {
 class AddressEditWidget;
 class DeviceExplorerModel;
@@ -37,7 +37,7 @@ class InspectorWidget final :
         void on_addressChange(const ::State::Address& newText);
 
     private:
-        DeviceExplorer::AddressEditWidget* m_lineEdit{};
+        Explorer::AddressEditWidget* m_lineEdit{};
 
         CommandDispatcher<> m_dispatcher;
 };
