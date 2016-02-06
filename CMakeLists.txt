@@ -14,8 +14,8 @@ find_package(Qt5 5.3 REQUIRED COMPONENTS Core Widgets)
 find_package(VTK COMPONENTS
   vtkCommonCore
   vtkFiltersSources
-  vtkGUISupportQt
   vtkInteractionWidgets
+  vtkGUISupportQt
 )
 if(NOT ${VTK_FOUND})
     return()

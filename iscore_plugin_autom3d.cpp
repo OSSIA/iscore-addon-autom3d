@@ -65,7 +65,7 @@ std::pair<const CommandParentFactoryKey, CommandGeneratorMap> iscore_plugin_auto
     return cmds;
 }
 
-int32_t iscore_plugin_autom3d::version() const
+iscore::Version iscore_plugin_autom3d::version() const
 {
     return 1;
 }
