@@ -46,7 +46,6 @@ set(SRCS
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Panel/AutomWidget.hpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Panel/AutomWidget.ui"
 
-"${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Autom3DProcessMetadata.cpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/iscore_plugin_autom3d.cpp"
 )
 

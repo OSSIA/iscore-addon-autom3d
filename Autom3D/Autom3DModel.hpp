@@ -6,7 +6,7 @@
 #include <QString>
 
 #include <Autom3D/Point.hpp>
-#include <Process/ProcessFactoryKey.hpp>
+
 #include <Process/TimeValue.hpp>
 #include <iscore/serialization/VisitorInterface.hpp>
 
@@ -50,7 +50,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         }
 
         //// ProcessModel ////
-        ProcessFactoryKey concreteFactoryKey() const override;
+        UuidKey<Process::ProcessFactory>concreteFactoryKey() const override;
 
         QString prettyName() const override;
 
