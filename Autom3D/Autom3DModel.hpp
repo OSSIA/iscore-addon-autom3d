@@ -50,7 +50,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         }
 
         //// ProcessModel ////
-        UuidKey<Process::ProcessFactory>concreteFactoryKey() const override;
+        UuidKey<Process::ProcessFactory> concreteFactoryKey() const override;
 
         QString prettyName() const override;
 
