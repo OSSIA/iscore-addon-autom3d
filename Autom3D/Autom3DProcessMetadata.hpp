@@ -1,6 +1,7 @@
 #pragma once
 #include <Process/ProcessMetadata.hpp>
 #include <QString>
+#include <iscore/plugins/customfactory/UuidKey.hpp>
 #include <iscore_plugin_autom3d_export.h>
 
 namespace Autom3D
