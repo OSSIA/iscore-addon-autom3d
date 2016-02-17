@@ -65,7 +65,7 @@ std::shared_ptr<OSSIA::StateElement> ProcessExecutor::state()
     auto st = OSSIA::State::create();
     if(m_addr)
     {
-        double u[3]{parentConstraint()->getPosition(), 0, 0};
+        double u[3]{getParentTimeConstraint()->getPosition(), 0, 0};
         double pt[3];
         double du[6];
         m_spline->Evaluate(u, pt, du);
