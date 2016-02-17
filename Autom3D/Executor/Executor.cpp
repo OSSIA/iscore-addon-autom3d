@@ -6,6 +6,7 @@
 #include <OSSIA/iscore2OSSIA.hpp>
 #include <OSSIA/Protocols/OSSIADevice.hpp>
 #include <Network/Node.h>
+#include <Editor/TimeConstraint.h>
 #include <Editor/Message.h>
 #include <Device/Protocol/DeviceList.hpp>
 namespace Autom3D
@@ -59,14 +60,12 @@ ProcessExecutor::~ProcessExecutor()
     m_spline->Delete();
 }
 
-std::shared_ptr<OSSIA::StateElement> ProcessExecutor::state(
-        const OSSIA::TimeValue& t,
-        const OSSIA::TimeValue&)
+std::shared_ptr<OSSIA::StateElement> ProcessExecutor::state()
 {
     auto st = OSSIA::State::create();
     if(m_addr)
     {
-        double u[3]{t, 0, 0};
+        double u[3]{parentConstraint()->getPosition(), 0, 0};
         double pt[3];
         double du[6];
         m_spline->Evaluate(u, pt, du);
