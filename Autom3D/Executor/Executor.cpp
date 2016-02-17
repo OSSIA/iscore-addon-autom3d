@@ -62,10 +62,15 @@ ProcessExecutor::~ProcessExecutor()
 
 std::shared_ptr<OSSIA::StateElement> ProcessExecutor::state()
 {
+    return state(parent->getPosition());
+}
+
+std::shared_ptr<OSSIA::State> ProcessExecutor::state(double t)
+{
     auto st = OSSIA::State::create();
     if(m_addr)
     {
-        double u[3]{getParentTimeConstraint()->getPosition(), 0, 0};
+        double u[3]{t, 0, 0};
         double pt[3];
         double du[6];
         m_spline->Evaluate(u, pt, du);
@@ -80,7 +85,11 @@ std::shared_ptr<OSSIA::StateElement> ProcessExecutor::state()
     }
 
     return st;
+}
 
+std::shared_ptr<OSSIA::StateElement> ProcessExecutor::offset(const OSSIA::TimeValue & off)
+{
+    return state(off / parent->getDurationNominal());
 }
 
 }
