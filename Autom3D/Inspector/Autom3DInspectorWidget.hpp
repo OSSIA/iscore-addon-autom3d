@@ -25,7 +25,7 @@ namespace Autom3D
 {
 class ProcessModel;
 class InspectorWidget final :
-        public ProcessInspectorWidgetDelegate_T<Autom3D::ProcessModel>
+        public Process::InspectorWidgetDelegate_T<Autom3D::ProcessModel>
 {
     public:
         explicit InspectorWidget(

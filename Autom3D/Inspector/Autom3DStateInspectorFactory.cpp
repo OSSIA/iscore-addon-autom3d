@@ -19,19 +19,19 @@ StateInspectorFactory::StateInspectorFactory() :
 }
 
 Inspector::InspectorWidgetBase* StateInspectorFactory::makeWidget(
-        const QObject& sourceElement,
+        const QList<const QObject*>& sourceElement,
         const iscore::DocumentContext& doc,
         QWidget* parent) const
 {
     return new StateInspectorWidget{
-                safe_cast<const ProcessState&>(sourceElement),
+        safe_cast<const ProcessState&>(*sourceElement.front()),
                 doc,
-                        parent};
+                parent};
 }
 
 bool StateInspectorFactory::matches(
-        const QObject& object) const
+        const QList<const QObject*>& object) const
 {
-    return dynamic_cast<const Autom3D::ProcessState*>(&object);
+    return dynamic_cast<const Autom3D::ProcessState*>(object.front());
 }
 }

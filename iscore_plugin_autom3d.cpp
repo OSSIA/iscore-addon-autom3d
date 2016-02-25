@@ -45,7 +45,7 @@ std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3d
         FW<Inspector::InspectorWidgetFactory,
              Autom3D::StateInspectorFactory>,
 #endif
-        FW<ProcessInspectorWidgetDelegateFactory,
+        FW<Process::InspectorWidgetDelegateFactory,
              Autom3D::InspectorFactory>,
         FW<RecreateOnPlay::ProcessComponentFactory,
              Autom3D::Executor::ProcessComponentFactory>

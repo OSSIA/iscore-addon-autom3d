@@ -12,14 +12,14 @@ struct DocumentContext;
 
 namespace Autom3D
 {
-class InspectorFactory final : public ProcessInspectorWidgetDelegateFactory
+class InspectorFactory final : public Process::InspectorWidgetDelegateFactory
 {
         ISCORE_CONCRETE_FACTORY_DECL("d312d001-b91f-42f0-8780-7e3a587c6ffc")
     public:
         InspectorFactory() = default;
 
     private:
-        ProcessInspectorWidgetDelegate* make(
+        Process::InspectorWidgetDelegate* make(
                 const Process::ProcessModel&,
                 const iscore::DocumentContext& doc,
                 QWidget* parent) const override;
