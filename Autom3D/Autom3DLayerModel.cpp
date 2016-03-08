@@ -1,10 +1,9 @@
-
-
 #include "Autom3DLayerModel.hpp"
 #include "Autom3DModel.hpp"
 #include "Autom3DPanelProxy.hpp"
 #include <Process/LayerModel.hpp>
-
+#include <iscore/document/DocumentContext.hpp>
+#include <Autom3D/Panel/AutomWidget.hpp>
 class QObject;
 #include <iscore/tools/SettableIdentifier.hpp>
 
@@ -17,7 +16,7 @@ LayerModel::LayerModel(
             QObject* parent) :
     Process::LayerModel {id, Metadata<ObjectKey_k, LayerModel>::get(), model, parent}
 {
-
+  init(model);
 }
 
 LayerModel::LayerModel(
@@ -27,7 +26,7 @@ LayerModel::LayerModel(
             QObject* parent) :
     Process::LayerModel {id, Metadata<ObjectKey_k, LayerModel>::get(), model, parent}
 {
-    // Nothing to copy
+  init(model);
 }
 
 Process::LayerModelPanelProxy* LayerModel::make_panelProxy(
@@ -44,6 +43,19 @@ void LayerModel::serialize(
 
 const ProcessModel& LayerModel::model() const
 {
-    return static_cast<const ProcessModel&>(processModel());
+  return static_cast<const ProcessModel&>(processModel());
+}
+
+AutomWidget* LayerModel::automationWidget() const
+{
+  return m_widget;
+}
+
+void LayerModel::init(ProcessModel& model)
+{
+  m_widget = new AutomWidget{
+                   model,
+                  iscore::IDocument::documentContext(model).commandStack};
+
 }
 }

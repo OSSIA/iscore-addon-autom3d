@@ -1,12 +1,11 @@
 #pragma once
-
 #include <Process/ProcessFactory.hpp>
 #include <iscore/serialization/VisitorCommon.hpp>
 #include <Autom3D/Autom3DModel.hpp>
 #include <Autom3D/Autom3DProcessMetadata.hpp>
 #include <Autom3D/Autom3DLayerModel.hpp>
-#include <DummyProcess/DummyLayerPresenter.hpp>
-#include <DummyProcess/DummyLayerView.hpp>
+#include <Autom3D/Autom3DPresenter.hpp>
+#include <Autom3D/Autom3DView.hpp>
 namespace Autom3D
 {
 class ProcessFactory final : public Process::ProcessFactory
@@ -47,14 +46,19 @@ class ProcessFactory final : public Process::ProcessFactory
                 Process::LayerView* v,
                 QObject* parent) override
         {
-            return new Dummy::DummyLayerPresenter{model, dynamic_cast<Dummy::DummyLayerView*>(v), parent};
+            return new LayerPresenter{
+              static_cast<const Autom3D::LayerModel&>(model),
+                  dynamic_cast<LayerView*>(v),
+                  parent};
         }
 
         Process::LayerView* makeLayerView(
-                const Process::LayerModel&,
+                const Process::LayerModel& model,
                 QGraphicsItem* parent) override
         {
-            return new Dummy::DummyLayerView{parent};
+            return new LayerView{
+              static_cast<const Autom3D::ProcessModel&>(model.processModel()),
+                  parent};
         }
 };
 

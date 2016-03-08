@@ -1,5 +1,6 @@
 #include "AutomWidget.hpp"
 
+
 #include <QMenu>
 
 #include "vtkRenderWindow.h"
@@ -16,11 +17,16 @@
 #include "QVTKInteractor.h"
 #include <QVBoxLayout>
 #include <QVTKWidget.h>
+#include <QVTKWidget2.h>
+#include <vtkOpenGLRenderWindow.h>
+#include <vtkGenericOpenGLRenderWindow.h>
+#include <vtkImageData.h>
 #include <vtkSplineWidget.h>
 #include <vtkSplineWidget2.h>
 #include <vtkCubeAxesActor.h>
 #include <vtkSplineRepresentation.h>
 #include <vtkParametricSpline.h>
+#include <vtkWindowToImageFilter.h>
 #include <vtkSmartPointer.h>
 
 #include <iscore/command/Dispatchers/CommandDispatcher.hpp>
@@ -28,6 +34,7 @@
 #include <Autom3D/Autom3DModel.hpp>
 namespace Autom3D
 {
+
 AutomWidget::AutomWidget(
         const ProcessModel& proc,
         iscore::CommandStackFacade& stck):
@@ -35,12 +42,18 @@ AutomWidget::AutomWidget(
     m_proc{proc}
 {
     m_widget = new QVTKWidget;
+    /*m_widget->setAutomaticImageCacheEnabled(true);
+    m_widget->setMaxRenderRateForImageCache(10);
+    connect(m_widget, &QVTKWidget2::cachedImageClean,
+            this, &AutomWidget::on_cachedImageClean);
+            */
     auto lay = new QVBoxLayout;
     this->setLayout(lay);
     lay->addWidget(m_widget);
 
     // create a window to make it stereo capable and give it to QVTKWidget
-    vtkRenderWindow* renwin = vtkRenderWindow::New();
+    auto renwin = vtkRenderWindow::New();
+    //renwin->SetOffScreenRendering( 1 );
 
     m_widget->SetRenderWindow(renwin);
 
@@ -74,6 +87,10 @@ AutomWidget::AutomWidget(
     cubeAxesActor->ZAxisMinorTickVisibilityOff();
     // update coords as we move through the window
 
+    m_img = vtkWindowToImageFilter::New();
+    m_img->SetInput(renwin);
+
+
     m_connections->Connect(m_spline,
                            vtkCommand::StartInteractionEvent,
                            this,
@@ -85,7 +102,7 @@ AutomWidget::AutomWidget(
                            SLOT(release(vtkObject*)));
 
 
-    renwin->Delete();
+    //renwin->Delete();
 
     con(m_proc, &ProcessModel::handlesChanged,
         this, &AutomWidget::on_handlesChanged);
@@ -96,6 +113,13 @@ AutomWidget::~AutomWidget()
 {
     m_renderer->Delete();
     m_connections->Delete();
+}
+
+QImage AutomWidget::getImage() const
+{
+    //m_widget->saveImageToCache();
+    m_img->Update();
+    return vtkImageDataToQImage(m_img->GetOutput());
 }
 
 
@@ -120,6 +144,37 @@ void AutomWidget::release(vtkObject* obj)
 
     auto cmd = new UpdateSpline{m_proc, std::move(handles)};
     m_disp.submitCommand(cmd);
+}
+
+void AutomWidget::on_cachedImageClean()
+{
+    //m_cache = vtkImageDataToQImage(m_widget->cachedImage());
+}
+
+QImage AutomWidget::vtkImageDataToQImage(vtkImageData *p_input) const
+{
+    if (!p_input)
+        return QImage();
+
+    const int width = p_input->GetDimensions()[0];
+    const int height = p_input->GetDimensions()[1];
+
+    QImage image(width, height, QImage::Format_RGB32);
+    QRgb* rgbPtr = reinterpret_cast<QRgb*>(image.bits()) +width * (height-1);
+    unsigned char* colorsPtr = reinterpret_cast<unsigned char*>(p_input->GetScalarPointer());
+
+    // mirror vertically
+    for(int row = 0; row < height; ++row)
+    {
+        for (int col = 0; col < width; ++col)
+        {
+            // Swap rgb
+            *(rgbPtr++) = QColor(colorsPtr[0], colorsPtr[1], colorsPtr[2]).rgb();
+            colorsPtr +=  3;
+        }
+        rgbPtr -= width * 2;
+    }
+    return image;
 }
 
 void AutomWidget::on_handlesChanged()

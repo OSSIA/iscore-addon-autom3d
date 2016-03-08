@@ -10,6 +10,7 @@ class QObject;
 
 namespace Autom3D
 {
+class AutomWidget;
 class ProcessModel;
 class LayerModel final : public Process::LayerModel
 {
@@ -35,12 +36,19 @@ class LayerModel final : public Process::LayerModel
             Process::LayerModel {vis, model, parent}
         {
             vis.writeTo(*this);
+            init(model);
         }
 
         Process::LayerModelPanelProxy* make_panelProxy(QObject* parent) const override;
         void serialize(const VisitorVariant&) const override;
 
         const ProcessModel& model() const;
+
+        AutomWidget* automationWidget() const;
+
+  private:
+        void init(ProcessModel& );
+        AutomWidget* m_widget{};
 };
 }
 
