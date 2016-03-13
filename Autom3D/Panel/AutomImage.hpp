@@ -6,6 +6,7 @@ class vtkSplineWidget2;
 class vtkWindowToImageFilter;
 class vtkImageData;
 class vtkRenderWindow;
+class vtkCubeAxesActor;
 namespace Autom3D
 {
 
@@ -18,6 +19,7 @@ class AutomImage : public QObject
     vtkRenderer* m_renderer{};
     vtkSplineWidget2* m_spline{};
     vtkRenderWindow* m_renwin{};
+    vtkCubeAxesActor* m_axes{};
 
     Q_OBJECT
 public:
@@ -25,7 +27,7 @@ public:
     ~AutomImage();
 
 
-    QImage getImage() const;
+    QImage getImage(int w, int h) const;
     void on_handlesChanged();
     QImage vtkImageDataToQImage(vtkImageData *p_input) const;
 

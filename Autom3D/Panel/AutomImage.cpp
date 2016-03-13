@@ -9,12 +9,15 @@
 #include <vtkSplineRepresentation.h>
 #include <vtkParametricSpline.h>
 #include <vtkWindowToImageFilter.h>
+#include <vtkOpenGLRenderWindow.h>
 #include <vtkSmartPointer.h>
 #include <vtkPoints.h>
 #include <vtkRenderWindowInteractor.h>
 #include <QVTKWidget.h>
+#include <vtkProperty.h>
 #include <vtkCamera.h>
-
+#include <vtkGraphicsFactory.h>
+#include <vtkPolyDataMapper.h>
 namespace Autom3D
 {
 
@@ -24,6 +27,7 @@ AutomImage::AutomImage(const ProcessModel &proc):
     m_widget = new QVTKWidget;
     m_renwin = vtkRenderWindow::New();
     m_renwin->SetOffScreenRendering( 1 );
+    m_renwin->SetSize(1024, 768);
     m_widget->SetRenderWindow(m_renwin);
 
 
@@ -33,7 +37,8 @@ AutomImage::AutomImage(const ProcessModel &proc):
     // add a renderer
     m_renderer = vtkRenderer::New();
     m_renwin->AddRenderer(m_renderer);
-    m_renderer->GetActiveCamera()->Zoom(0.5);
+    m_renwin->SetAlphaBitPlanes(1);
+    m_renderer->GetActiveCamera()->Zoom(0.75);
     m_renderer->GetActiveCamera()->SetPosition(0, 0, 4);
 
     // put cone in one window
@@ -62,18 +67,21 @@ AutomImage::AutomImage(const ProcessModel &proc):
 
     con(m_proc, &ProcessModel::handlesChanged,
         this, &AutomImage::on_handlesChanged);
+    on_handlesChanged();
 }
 
 AutomImage::~AutomImage()
 {
-    delete m_widget;
 }
 
-QImage AutomImage::getImage() const
+QImage AutomImage::getImage(int w, int h) const
 {
-    //m_widget->saveImageToCache();
+    m_renwin->Render();
+
     auto  m_img = vtkWindowToImageFilter::New();
     m_img->SetInput(m_renwin);
+    m_img->SetInputBufferTypeToRGBA(); //also record the alpha (transparency) channel
+    //m_img->ReadFrontBufferOff(); // read from the back buffer
     m_img->Update();
 
     auto img = vtkImageDataToQImage(m_img->GetOutput());
@@ -96,6 +104,7 @@ void AutomImage::on_handlesChanged()
     spl->SetNumberOfPoints(newPoints->GetNumberOfPoints());
     rep->InitializeHandles(newPoints);
 
+
     emit changed();
 }
 
@@ -107,7 +116,7 @@ QImage AutomImage::vtkImageDataToQImage(vtkImageData *p_input) const
     const int width = p_input->GetDimensions()[0];
     const int height = p_input->GetDimensions()[1];
 
-    QImage image(width, height, QImage::Format_RGB32);
+    QImage image(width, height, QImage::Format_ARGB32);
     QRgb* rgbPtr = reinterpret_cast<QRgb*>(image.bits()) +width * (height-1);
     unsigned char* colorsPtr = reinterpret_cast<unsigned char*>(p_input->GetScalarPointer());
 
@@ -117,8 +126,8 @@ QImage AutomImage::vtkImageDataToQImage(vtkImageData *p_input) const
         for (int col = 0; col < width; ++col)
         {
             // Swap rgb
-            *(rgbPtr++) = QColor(colorsPtr[0], colorsPtr[1], colorsPtr[2]).rgb();
-            colorsPtr +=  3;
+            *(rgbPtr++) = qRgba(colorsPtr[0], colorsPtr[1], colorsPtr[2], colorsPtr[3]);
+            colorsPtr +=  4;
         }
         rgbPtr -= width * 2;
     }

@@ -7,8 +7,8 @@
 namespace Autom3D
 {
 LayerView::LayerView(
-    const ProcessModel& proc,
-    QGraphicsItem* parent):
+        const ProcessModel& proc,
+        QGraphicsItem* parent):
     Process::LayerView{parent},
     m_image{new AutomImage{proc}}
 {
@@ -19,8 +19,9 @@ LayerView::LayerView(
 
 void LayerView::paint_impl(QPainter* painter) const
 {
-  auto img = m_image->getImage();
-  painter->drawImage(boundingRect(), img, img.rect());
+    auto rect = boundingRect();
+    auto img = m_image->getImage(rect.x(), rect.y());
+    painter->drawImage(rect, img, img.rect());
 }
 
 void LayerView::mousePressEvent(QGraphicsSceneMouseEvent*)
