@@ -115,6 +115,11 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
             return m_origin;
         }
 
+        bool useDerivative() const
+        { return m_useDerivative; }
+        void setUseDerivative(bool b)
+        { m_useDerivative = b; }
+
     signals:
         void addressChanged(const ::State::Address& arg);
 
@@ -151,6 +156,8 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
 
         Point m_scale{50, 50, 50};
         Point m_origin{500, 500, 500};
+
+        bool m_useDerivative = false;
 
         std::vector<Point> m_handles;
         ProcessState* m_startState{};

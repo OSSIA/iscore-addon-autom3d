@@ -41,7 +41,8 @@ class ProcessExecutor final :
                 const std::vector<Point>& spline,
                 const Device::DeviceList& devices,
                 Point scale,
-                Point origin);
+                Point origin,
+                bool deriv);
         ~ProcessExecutor();
 
         std::shared_ptr<OSSIA::StateElement> state() override;
@@ -60,6 +61,10 @@ class ProcessExecutor final :
         vtkParametricSpline* m_spline{};
         Point m_scale;
         Point m_origin;
+
+        double m_prev_t = 0;
+        double m_prev_pt[3]{};
+        bool m_use_deriv{};
 
 };
 

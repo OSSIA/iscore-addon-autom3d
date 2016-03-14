@@ -16,11 +16,12 @@ ProcessComponent::ProcessComponent(
     RecreateOnPlay::ProcessComponent{parentConstraint, element, id, "Autom3DComponent", parent}
 {
     auto proc = std::make_shared<ProcessExecutor>(
-                element.address(),
-                element.handles(),
-                ctx.devices.list(),
-                element.scale(),
-                element.origin());
+                    element.address(),
+                    element.handles(),
+                    ctx.devices.list(),
+                    element.scale(),
+                    element.origin(),
+                    element.useDerivative());
     m_ossia_process = proc;
 }
 

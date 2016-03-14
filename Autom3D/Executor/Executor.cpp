@@ -19,13 +19,15 @@ ProcessExecutor::ProcessExecutor(
         const std::vector<Point>& spline,
         const Device::DeviceList& devices,
         Point scale,
-        Point origin):
+        Point origin,
+        bool deriv):
     m_devices{devices},
     m_start{OSSIA::State::create()},
     m_end{OSSIA::State::create()},
     m_spline{vtkParametricSpline::New()},
     m_scale{scale},
-    m_origin{origin}
+    m_origin{origin},
+    m_use_deriv{deriv}
 {
     // Load the address
     // Look for the real node in the device
@@ -72,14 +74,33 @@ std::shared_ptr<OSSIA::State> ProcessExecutor::state(double t)
     {
         double u[3]{t, 0, 0};
         double pt[3];
-        double du[6];
+        double du[9];
         m_spline->Evaluate(u, pt, du);
 
-        auto mess = OSSIA::Message::create(m_addr,
-                                           new OSSIA::Tuple{
-                                               new OSSIA::Float{float(pt[0]) * m_scale.x() + m_origin.x()},
-                                               new OSSIA::Float{float(pt[1]) * m_scale.y() + m_origin.y()},
-                                               new OSSIA::Float{float(pt[2]) * m_scale.z() + m_origin.z()}});
+        OSSIA::Tuple* tuple;
+        if(!m_use_deriv)
+        {
+            tuple = new OSSIA::Tuple{
+                    new OSSIA::Float{float(pt[0]) * m_scale.x() + m_origin.x()},
+                    new OSSIA::Float{float(pt[1]) * m_scale.y() + m_origin.y()},
+                    new OSSIA::Float{float(pt[2]) * m_scale.z() + m_origin.z()}
+                    };
+        }
+        else
+        {
+            double dt = t - m_prev_t;
+            tuple = new OSSIA::Tuple{
+                    new OSSIA::Float{float((pt[0] - m_prev_pt[0]) / dt) * m_scale.x()},
+                    new OSSIA::Float{float((pt[1] - m_prev_pt[1]) / dt) * m_scale.y()},
+                    new OSSIA::Float{float((pt[2] - m_prev_pt[2]) / dt) * m_scale.z()}
+                    };
+        }
+
+        m_prev_pt[0] = pt[0];
+        m_prev_pt[1] = pt[1];
+        m_prev_pt[2] = pt[2];
+        m_prev_t = t;
+        auto mess = OSSIA::Message::create(m_addr, tuple);
 
         st->stateElements().push_back(std::move(mess));
     }
