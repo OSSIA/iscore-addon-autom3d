@@ -107,7 +107,7 @@ void Visitor<Writer<JSONObject>>::writeTo(Autom3D::ProcessModel& autom)
     Deserializer<JSONValue> elementPluginDeserializer(m_obj["PluginsMetadata"]);
     autom.pluginModelList = new iscore::ElementPluginModelList{elementPluginDeserializer, &autom};
 
-    autom.setAddress(fromJsonObject<State::Address>(m_obj["Address"].toObject()));
+    autom.setAddress(fromJsonObject<State::Address>(m_obj["Address"]));
     autom.setMin(fromJsonValue<Autom3D::Point>(m_obj["Min"]));
     autom.setMax(fromJsonValue<Autom3D::Point>(m_obj["Max"]));
 
