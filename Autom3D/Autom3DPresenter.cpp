@@ -7,15 +7,15 @@ namespace Autom3D
 LayerPresenter::LayerPresenter(
         const LayerModel& model,
         LayerView* view,
+        const Process::ProcessPresenterContext& ctx,
         QObject* parent):
-    Process::LayerPresenter{"AudioLayerPresenter", parent},
+    Process::LayerPresenter{ctx, parent},
     m_layer{model},
-    m_view{view},
-    m_focusDispatcher{iscore::IDocument::documentContext(model).document}
+    m_view{view}
 {
     connect(view, &LayerView::pressed,
             this, [&] () {
-        m_focusDispatcher.focus(this);
+        m_context.context.focusDispatcher.focus(this);
     });
 }
 

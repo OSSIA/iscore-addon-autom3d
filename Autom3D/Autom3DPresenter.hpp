@@ -15,6 +15,7 @@ class LayerPresenter final :
         explicit LayerPresenter(
                 const LayerModel& model,
                 LayerView* view,
+                const Process::ProcessPresenterContext& ctx,
                 QObject* parent);
 
         void setWidth(qreal width) override;
@@ -40,7 +41,6 @@ class LayerPresenter final :
     private:
         const LayerModel& m_layer;
         LayerView* m_view{};
-        FocusDispatcher m_focusDispatcher;
         ZoomRatio m_ratio{1};
 };
 

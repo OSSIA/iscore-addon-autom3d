@@ -44,11 +44,13 @@ class ProcessFactory final : public Process::ProcessFactory
         Process::LayerPresenter* makeLayerPresenter(
                 const Process::LayerModel& model,
                 Process::LayerView* v,
+                const Process::ProcessPresenterContext& ctx,
                 QObject* parent) override
         {
             return new LayerPresenter{
               static_cast<const Autom3D::LayerModel&>(model),
                   dynamic_cast<LayerView*>(v),
+                  ctx,
                   parent};
         }
 
