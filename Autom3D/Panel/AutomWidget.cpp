@@ -37,7 +37,7 @@ namespace Autom3D
 
 AutomWidget::AutomWidget(
         const ProcessModel& proc,
-        iscore::CommandStackFacade& stck):
+        const iscore::CommandStackFacade& stck):
     m_disp{stck},
     m_proc{proc}
 {

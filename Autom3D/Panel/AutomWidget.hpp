@@ -23,7 +23,7 @@ class AutomWidget final : public QWidget
     public:
         AutomWidget(
                 const ProcessModel& proc,
-                iscore::CommandStackFacade& stck);
+                const iscore::CommandStackFacade& stck);
         ~AutomWidget();
 
         QImage getImage() const;
