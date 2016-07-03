@@ -10,9 +10,8 @@ class LayerView final :
 {
         Q_OBJECT
     public:
-        explicit LayerView(
-        const ProcessModel& ,
-        QGraphicsItem* parent);
+        explicit LayerView(QGraphicsItem* parent);
+        void setImage(AutomImage*);
 
     signals:
         void pressed();
@@ -21,6 +20,7 @@ class LayerView final :
         void paint_impl(QPainter*) const override;
         void mousePressEvent(QGraphicsSceneMouseEvent*) override;
 
-        AutomImage* m_image;
+        AutomImage* m_image{};
+        QMetaObject::Connection m_con;
 };
 }

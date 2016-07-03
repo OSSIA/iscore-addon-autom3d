@@ -1,6 +1,7 @@
 #include "Autom3DPresenter.hpp"
 #include <iscore/document/DocumentContext.hpp>
 #include <Autom3D/Autom3DView.hpp>
+#include <Autom3D/Panel/AutomImage.hpp>
 
 namespace Autom3D
 {
@@ -17,6 +18,7 @@ LayerPresenter::LayerPresenter(
             this, [&] () {
         m_context.context.focusDispatcher.focus(this);
     });
+    m_view->setImage(new AutomImage{static_cast<const Autom3D::ProcessModel&>(model.processModel())});
 }
 
 void LayerPresenter::setWidth(qreal val)

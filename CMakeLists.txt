@@ -79,7 +79,7 @@ iscore_generate_command_list_file(${PROJECT_NAME} "${HDRS}")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
                      Qt5::Core Qt5::Widgets Qt5::OpenGL
-                     iscore_lib_base iscore_lib_device iscore_plugin_deviceexplorer iscore_lib_process iscore_lib_state  iscore_plugin_ossia iscore_lib_dummyprocess
+                     iscore_lib_base iscore_lib_device iscore_plugin_deviceexplorer iscore_lib_process iscore_lib_state  iscore_plugin_ossia
                      )
 
 if(TARGET iscore_lib_inspector)

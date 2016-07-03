@@ -68,41 +68,6 @@ QString ProcessModel::prettyName() const
     return metadata.name() + " : " + address().toString();
 }
 
-void ProcessModel::setDurationAndScale(const TimeValue& newDuration)
-{
-    // We only need to change the duration.
-    setDuration(newDuration);
-}
-
-void ProcessModel::setDurationAndGrow(const TimeValue& newDuration)
-{
-    setDuration(newDuration);
-}
-
-void ProcessModel::setDurationAndShrink(const TimeValue& newDuration)
-{
-    setDuration(newDuration);
-}
-
-Process::LayerModel* ProcessModel::makeLayer_impl(
-        const Id<Process::LayerModel>& viewModelId,
-        const QByteArray& constructionData,
-        QObject* parent)
-{
-    auto vm = new LayerModel{*this, viewModelId, parent};
-    return vm;
-}
-
-Process::LayerModel* ProcessModel::cloneLayer_impl(
-        const Id<Process::LayerModel>& newId,
-        const Process::LayerModel& source,
-        QObject* parent)
-{
-    auto vm = new LayerModel {
-              static_cast<const LayerModel&>(source), *this, newId, parent};
-    return vm;
-}
-
 ProcessState* ProcessModel::startStateData() const
 {
     return m_startState;
@@ -116,13 +81,6 @@ ProcessState* ProcessModel::endStateData() const
 ::State::Address ProcessModel::address() const
 {
     return m_address;
-}
-
-Point ProcessModel::value(const TimeValue& time)
-{
-    ISCORE_TODO;
-    // TODO instead get a State or at least a MessageList.
-    return {};
 }
 
 Point ProcessModel::min() const
@@ -163,32 +121,4 @@ void ProcessModel::setMax(Point arg)
     m_max = arg;
     emit maxChanged(arg);
 }
-}
-
-
-
-void Autom3D::ProcessModel::startExecution()
-{
-}
-
-void Autom3D::ProcessModel::stopExecution()
-{
-}
-
-void Autom3D::ProcessModel::reset()
-{
-}
-
-Selection Autom3D::ProcessModel::selectableChildren() const
-{
-    return {};
-}
-
-Selection Autom3D::ProcessModel::selectedChildren() const
-{
-    return {};
-}
-
-void Autom3D::ProcessModel::setSelection(const Selection& s) const
-{
 }

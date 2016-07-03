@@ -54,18 +54,6 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
 
         QString prettyName() const override;
 
-        Process::LayerModel* makeLayer_impl(
-                const Id<Process::LayerModel>& viewModelId,
-                const QByteArray& constructionData,
-                QObject* parent) override;
-        Process::LayerModel* loadLayer_impl(
-                const VisitorVariant&,
-                QObject* parent) override;
-
-        void setDurationAndScale(const TimeValue& newDuration) override;
-        void setDurationAndGrow(const TimeValue& newDuration) override;
-        void setDurationAndShrink(const TimeValue& newDuration) override;
-
         void serialize_impl(const VisitorVariant& vis) const override;
 
         /// States
@@ -74,8 +62,6 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
 
         //// Autom3DModel specifics ////
         ::State::Address address() const;
-
-        Point value(const TimeValue& time);
 
         Point min() const;
         Point max() const;
@@ -135,20 +121,8 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         ProcessModel(const ProcessModel& source,
                         const Id<Process::ProcessModel>& id,
                         QObject* parent);
-        Process::LayerModel* cloneLayer_impl(
-                const Id<Process::LayerModel>& newId,
-                const Process::LayerModel& source,
-                QObject* parent) override;
 
     private:
-        void startExecution() override;
-        void stopExecution() override;
-        void reset() override;
-
-        Selection selectableChildren() const override;
-        Selection selectedChildren() const override;
-        void setSelection(const Selection& s) const override;
-
         ::State::Address m_address;
 
         Point m_min{};
