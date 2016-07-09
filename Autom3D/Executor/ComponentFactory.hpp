@@ -22,8 +22,7 @@ class ProcessComponentFactory final :
 
         bool matches(
                 Process::ProcessModel& proc,
-                const RecreateOnPlay::DocumentPlugin&,
-                const iscore::DocumentContext &) const override;
+                const RecreateOnPlay::DocumentPlugin&) const override;
 };
 }
 }
