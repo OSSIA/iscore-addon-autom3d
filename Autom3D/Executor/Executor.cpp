@@ -6,6 +6,7 @@
 #include <OSSIA/iscore2OSSIA.hpp>
 #include <OSSIA/Protocols/OSSIADevice.hpp>
 #include <Network/Node.h>
+#include <Editor/State.h>
 #include <Editor/TimeConstraint.h>
 #include <Editor/Message.h>
 #include <Device/Protocol/DeviceList.hpp>
