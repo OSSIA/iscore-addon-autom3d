@@ -21,7 +21,6 @@ class Component final :
                 QObject* parent);
 
 };
-EXECUTOR_PROCESS_COMPONENT_FACTORY(ComponentFactory, "72416e08-5454-431a-a5cd-0c4a5c62e9e9", Component, Autom3D::ProcessModel)
-
+using ComponentFactory = ::RecreateOnPlay::ProcessComponentFactory_T<Component>;
 }
 }

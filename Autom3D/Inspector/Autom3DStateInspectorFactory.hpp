@@ -15,7 +15,7 @@ namespace Autom3D
 class StateInspectorFactory final :
         public Inspector::InspectorWidgetFactory
 {
-        ISCORE_CONCRETE_FACTORY_DECL("77a6b896-2a29-4014-8156-fdb410408fea")
+        ISCORE_CONCRETE_FACTORY("77a6b896-2a29-4014-8156-fdb410408fea")
     public:
         StateInspectorFactory();
 
