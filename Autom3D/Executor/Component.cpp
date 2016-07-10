@@ -7,13 +7,13 @@ namespace Autom3D
 namespace Executor
 {
 
-ProcessComponent::ProcessComponent(
+Component::Component(
         RecreateOnPlay::ConstraintElement& parentConstraint,
         ProcessModel& element,
         const RecreateOnPlay::Context& ctx,
         const Id<iscore::Component>& id,
         QObject* parent):
-    RecreateOnPlay::ProcessComponent{parentConstraint, element, id, "Autom3DComponent", parent}
+    ::RecreateOnPlay::ProcessComponent_T<Autom3D::ProcessModel>{parentConstraint, element, ctx, id, "Autom3DComponent", parent}
 {
     auto proc = std::make_shared<ProcessExecutor>(
                     element.address(),
@@ -25,10 +25,5 @@ ProcessComponent::ProcessComponent(
     m_ossia_process = proc;
 }
 
-const iscore::Component::Key& ProcessComponent::key() const
-{
-    static iscore::Component::Key k("Autom3DComponent");
-    return k;
-}
 }
 }
