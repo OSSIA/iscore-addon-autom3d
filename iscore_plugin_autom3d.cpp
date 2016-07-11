@@ -72,6 +72,6 @@ iscore::Version iscore_plugin_autom3d::version() const
 
 UuidKey<iscore::Plugin> iscore_plugin_autom3d::key() const
 {
-    return "21f2eee9-5958-401d-a456-2e07b48063fb";
+    return_uuid("21f2eee9-5958-401d-a456-2e07b48063fb");
 }
 
