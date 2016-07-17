@@ -7,7 +7,6 @@
 #include "Autom3DLayerModel.hpp"
 #include "Autom3DModel.hpp"
 #include <State/Address.hpp>
-#include <iscore/plugins/documentdelegate/plugin/ElementPluginModelList.hpp>
 #include <iscore/serialization/JSONValueVisitor.hpp>
 #include <iscore/serialization/VisitorCommon.hpp>
 #include <iscore/tools/std/StdlibWrapper.hpp>
@@ -43,8 +42,6 @@ struct TSerializer<DataStream, std::vector<QVector3D>>
 template<>
 void Visitor<Reader<DataStream>>::readFrom_impl(const Autom3D::ProcessModel& autom)
 {
-    readFrom(*autom.pluginModelList);
-
     m_stream << autom.address();
     m_stream << autom.min();
     m_stream << autom.max();
@@ -56,8 +53,6 @@ void Visitor<Reader<DataStream>>::readFrom_impl(const Autom3D::ProcessModel& aut
 template<>
 void Visitor<Writer<DataStream>>::writeTo(Autom3D::ProcessModel& autom)
 {
-    autom.pluginModelList = new iscore::ElementPluginModelList{*this, &autom};
-
     State::Address address;
     Autom3D::Point min, max;
     std::vector<Autom3D::Point> handles;
@@ -93,8 +88,6 @@ void Visitor<Writer<JSONValue>>::writeTo(Autom3D::Point& pt)
 template<>
 void Visitor<Reader<JSONObject>>::readFrom_impl(const Autom3D::ProcessModel& autom)
 {
-    m_obj["PluginsMetadata"] = toJsonValue(*autom.pluginModelList);
-
     m_obj["Address"] = toJsonObject(autom.address());
     m_obj["Min"] = toJsonValue(autom.min());
     m_obj["Max"] = toJsonValue(autom.max());
@@ -104,9 +97,6 @@ void Visitor<Reader<JSONObject>>::readFrom_impl(const Autom3D::ProcessModel& aut
 template<>
 void Visitor<Writer<JSONObject>>::writeTo(Autom3D::ProcessModel& autom)
 {
-    Deserializer<JSONValue> elementPluginDeserializer(m_obj["PluginsMetadata"]);
-    autom.pluginModelList = new iscore::ElementPluginModelList{elementPluginDeserializer, &autom};
-
     autom.setAddress(fromJsonObject<State::Address>(m_obj["Address"]));
     autom.setMin(fromJsonValue<Autom3D::Point>(m_obj["Min"]));
     autom.setMax(fromJsonValue<Autom3D::Point>(m_obj["Max"]));

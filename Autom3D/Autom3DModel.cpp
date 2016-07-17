@@ -9,7 +9,6 @@
 #include <Process/ModelMetadata.hpp>
 #include <State/Address.hpp>
 #include <Autom3D/State/Autom3DState.hpp>
-#include <iscore/plugins/documentdelegate/plugin/ElementPluginModelList.hpp>
 #include <iscore/tools/IdentifiedObjectMap.hpp>
 #include <iscore/tools/SettableIdentifier.hpp>
 
@@ -26,8 +25,6 @@ ProcessModel::ProcessModel(
     m_startState{new ProcessState{*this, 0., this}},
     m_endState{new ProcessState{*this, 1., this}}
 {
-    pluginModelList = new iscore::ElementPluginModelList{iscore::IDocument::documentContext(*parent), this};
-
     metadata.setName(QString("Autom3D.%1").arg(*this->id().val()));
     m_handles.emplace_back(-0.5, -0.5, -0.5);
     m_handles.emplace_back(0, 0, 0);
@@ -46,8 +43,6 @@ ProcessModel::ProcessModel(
     m_startState{new ProcessState{*this, 0., this}},
     m_endState{new ProcessState{*this, 1., this}}
 {
-    pluginModelList = new iscore::ElementPluginModelList(*source.pluginModelList, this);
-
     metadata.setName(QString("Autom3D.%1").arg(*this->id().val()));
 }
 
