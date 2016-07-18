@@ -41,7 +41,6 @@ set(SRCS
 
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Executor/Executor.cpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Executor/Component.cpp"
-"${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Executor/ComponentFactory.cpp"
 
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/State/Autom3DState.cpp"
 
