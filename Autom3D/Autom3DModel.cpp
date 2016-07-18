@@ -46,18 +46,6 @@ ProcessModel::ProcessModel(
     metadata.setName(QString("Autom3D.%1").arg(*this->id().val()));
 }
 
-Process::ProcessModel* ProcessModel::clone(
-        const Id<Process::ProcessModel>& newId,
-        QObject* newParent) const
-{
-    return new ProcessModel {*this, newId, newParent};
-}
-
-UuidKey<Process::ProcessFactory>ProcessModel::concreteFactoryKey() const
-{
-    return Metadata<ConcreteFactoryKey_k, ProcessModel>::get();
-}
-
 QString ProcessModel::prettyName() const
 {
     return metadata.name() + " : " + address().toString();

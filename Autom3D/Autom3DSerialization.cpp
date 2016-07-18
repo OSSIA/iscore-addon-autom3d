@@ -103,13 +103,3 @@ void Visitor<Writer<JSONObject>>::writeTo(Autom3D::ProcessModel& autom)
 
     autom.setHandles(fromJsonValueArray<std::vector<Autom3D::Point>>(m_obj["Handles"].toArray()));
 }
-
-
-// Dynamic stuff
-namespace Autom3D
-{
-void ProcessModel::serialize_impl(const VisitorVariant& vis) const
-{
-    serialize_dyn(vis, *this);
-}
-}

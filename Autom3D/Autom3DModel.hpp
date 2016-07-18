@@ -1,6 +1,7 @@
 #pragma once
 #include <Process/Process.hpp>
 #include <Autom3D/State/Autom3DState.hpp>
+#include <Autom3D/Autom3DProcessMetadata.hpp>
 #include <State/Address.hpp>
 #include <QByteArray>
 #include <QString>
@@ -26,6 +27,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
 {
         ISCORE_SERIALIZE_FRIENDS(ProcessModel, DataStream)
         ISCORE_SERIALIZE_FRIENDS(ProcessModel, JSONObject)
+        MODEL_METADATA_IMPL(Autom3D::ProcessModel)
 
         Q_OBJECT
         Q_PROPERTY(::State::Address address READ address WRITE setAddress NOTIFY addressChanged)
@@ -37,8 +39,6 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         ProcessModel(const TimeValue& duration,
                      const Id<Process::ProcessModel>& id,
                      QObject* parent);
-        Process::ProcessModel* clone(const Id<Process::ProcessModel>& newId,
-                            QObject* newParent) const override;
 
         template<typename Impl>
         ProcessModel(Deserializer<Impl>& vis, QObject* parent) :
@@ -50,11 +50,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         }
 
         //// ProcessModel ////
-        UuidKey<Process::ProcessFactory> concreteFactoryKey() const override;
-
         QString prettyName() const override;
-
-        void serialize_impl(const VisitorVariant& vis) const override;
 
         /// States
         ProcessState* startStateData() const override;
