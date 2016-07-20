@@ -81,18 +81,18 @@ std::shared_ptr<OSSIA::State> ProcessExecutor::state(double t)
         OSSIA::Tuple tuple;
         if(!m_use_deriv)
         {
-          tuple.append(
+          tuple.value = {
                 OSSIA::Float{float(pt[0]) * m_scale.x() + m_origin.x()},
                 OSSIA::Float{float(pt[1]) * m_scale.y() + m_origin.y()},
-                OSSIA::Float{float(pt[2]) * m_scale.z() + m_origin.z()});
+                OSSIA::Float{float(pt[2]) * m_scale.z() + m_origin.z()}};
         }
         else
         {
             double dt = t - m_prev_t;
-            tuple.append(
+            tuple.value = {
                   OSSIA::Float{float((pt[0] - m_prev_pt[0]) / dt) * m_scale.x()},
                   OSSIA::Float{float((pt[1] - m_prev_pt[1]) / dt) * m_scale.y()},
-                  OSSIA::Float{float((pt[2] - m_prev_pt[2]) / dt) * m_scale.z()});
+                  OSSIA::Float{float((pt[2] - m_prev_pt[2]) / dt) * m_scale.z()}};
         }
 
         m_prev_pt[0] = pt[0];
