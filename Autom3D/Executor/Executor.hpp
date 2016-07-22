@@ -46,7 +46,7 @@ class ProcessExecutor final :
         ~ProcessExecutor();
 
         std::shared_ptr<OSSIA::StateElement> state() override;
-        std::shared_ptr<OSSIA::StateElement> offset(const OSSIA::TimeValue &) override;
+        std::shared_ptr<OSSIA::StateElement> offset(OSSIA::TimeValue) override;
 
         std::shared_ptr<OSSIA::State> state(double t); // t in [0; 1]
 
