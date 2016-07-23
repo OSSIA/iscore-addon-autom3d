@@ -23,7 +23,6 @@ class ConstraintElement;
 }
 namespace OSSIA {
 class State;
-class StateElement;
 class Address;
 }  // namespace OSSIA
 
@@ -45,16 +44,15 @@ class ProcessExecutor final :
                 bool deriv);
         ~ProcessExecutor();
 
-        std::shared_ptr<OSSIA::StateElement> state() override;
-        std::shared_ptr<OSSIA::StateElement> offset(OSSIA::TimeValue) override;
-
-        std::shared_ptr<OSSIA::State> state(double t); // t in [0; 1]
+        OSSIA::StateElement state(double);
+        OSSIA::StateElement state() override;
+        OSSIA::StateElement offset(OSSIA::TimeValue) override;
 
     private:
         const Device::DeviceList& m_devices;
 
-        std::shared_ptr<OSSIA::State> m_start;
-        std::shared_ptr<OSSIA::State> m_end;
+        OSSIA::State m_start;
+        OSSIA::State m_end;
 
         std::shared_ptr<OSSIA::Address> m_addr;
 

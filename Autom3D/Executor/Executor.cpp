@@ -23,8 +23,6 @@ ProcessExecutor::ProcessExecutor(
         Point origin,
         bool deriv):
     m_devices{devices},
-    m_start{OSSIA::State::create()},
-    m_end{OSSIA::State::create()},
     m_spline{vtkParametricSpline::New()},
     m_scale{scale},
     m_origin{origin},
@@ -63,14 +61,13 @@ ProcessExecutor::~ProcessExecutor()
     m_spline->Delete();
 }
 
-std::shared_ptr<OSSIA::StateElement> ProcessExecutor::state()
+OSSIA::StateElement ProcessExecutor::state()
 {
     return state(parent->getPosition());
 }
 
-std::shared_ptr<OSSIA::State> ProcessExecutor::state(double t)
+OSSIA::StateElement ProcessExecutor::state(double t)
 {
-    auto st = OSSIA::State::create();
     if(m_addr)
     {
         double u[3]{t, 0, 0};
@@ -99,15 +96,14 @@ std::shared_ptr<OSSIA::State> ProcessExecutor::state(double t)
         m_prev_pt[1] = pt[1];
         m_prev_pt[2] = pt[2];
         m_prev_t = t;
-        auto mess = OSSIA::Message::create(m_addr, tuple);
 
-        st->stateElements().push_back(std::move(mess));
+        return OSSIA::Message{m_addr, tuple};
     }
 
-    return st;
+    return {};
 }
 
-std::shared_ptr<OSSIA::StateElement> ProcessExecutor::offset(OSSIA::TimeValue off)
+OSSIA::StateElement ProcessExecutor::offset(OSSIA::TimeValue off)
 {
     return state(off / parent->getDurationNominal());
 }
