@@ -15,7 +15,6 @@
 #include <iscore/tools/ModelPath.hpp>
 #include <iscore/tools/ModelPathSerialization.hpp>
 #include <iscore/tools/TreeNode.hpp>
-#include <iscore/tools/std/StdlibWrapper.hpp>
 namespace Autom3D
 {
 ChangeAddress::ChangeAddress(

@@ -9,7 +9,6 @@
 #include <State/Address.hpp>
 #include <iscore/serialization/JSONValueVisitor.hpp>
 #include <iscore/serialization/VisitorCommon.hpp>
-#include <iscore/tools/std/StdlibWrapper.hpp>
 
 template<>
 struct TSerializer<DataStream, std::vector<QVector3D>>
