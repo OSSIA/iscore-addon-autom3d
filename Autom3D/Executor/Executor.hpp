@@ -1,5 +1,5 @@
 #pragma once
-#include <Editor/TimeProcess.h>
+#include <ossia/editor/scenario/time_process.hpp>
 #include <OSSIA/Executor/ProcessElement.hpp>
 #include <OSSIA/Executor/ExecutorContext.hpp>
 #include <iscore/document/DocumentContext.hpp>
@@ -21,7 +21,7 @@ namespace RecreateOnPlay
 {
 class ConstraintElement;
 }
-namespace OSSIA {
+namespace ossia {
 class State;
 class Address;
 }  // namespace OSSIA
@@ -32,7 +32,7 @@ class ProcessModel;
 namespace Executor
 {
 class ProcessExecutor final :
-        public OSSIA::TimeProcess
+        public ossia::time_process
 {
     public:
         ProcessExecutor(
@@ -44,17 +44,17 @@ class ProcessExecutor final :
                 bool deriv);
         ~ProcessExecutor();
 
-        OSSIA::StateElement state(double);
-        OSSIA::StateElement state() override;
-        OSSIA::StateElement offset(OSSIA::TimeValue) override;
+        ossia::state_element state(double);
+        ossia::state_element state() override;
+        ossia::state_element offset(ossia::time_value) override;
 
     private:
         const Device::DeviceList& m_devices;
 
-        OSSIA::State m_start;
-        OSSIA::State m_end;
+        ossia::state m_start;
+        ossia::state m_end;
 
-        std::shared_ptr<OSSIA::Address> m_addr;
+        std::shared_ptr<ossia::Address> m_addr;
 
         vtkParametricSpline* m_spline{};
         Point m_scale;

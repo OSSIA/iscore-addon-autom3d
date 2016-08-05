@@ -5,10 +5,9 @@
 #include <Device/Protocol/DeviceInterface.hpp>
 #include <OSSIA/iscore2OSSIA.hpp>
 #include <OSSIA/Protocols/OSSIADevice.hpp>
-#include <Network/Node.h>
-#include <Editor/State.h>
-#include <Editor/TimeConstraint.h>
-#include <Editor/Message.h>
+#include <ossia/network/base/node.hpp>
+#include <ossia/editor/state/state_element.hpp>
+#include <ossia/editor/scenario/time_constraint.hpp>
 #include <Device/Protocol/DeviceList.hpp>
 namespace Autom3D
 {
@@ -61,12 +60,12 @@ ProcessExecutor::~ProcessExecutor()
     m_spline->Delete();
 }
 
-OSSIA::StateElement ProcessExecutor::state()
+ossia::state_element ProcessExecutor::state()
 {
     return state(parent->getPosition());
 }
 
-OSSIA::StateElement ProcessExecutor::state(double t)
+ossia::state_element ProcessExecutor::state(double t)
 {
     if(m_addr)
     {
@@ -75,21 +74,21 @@ OSSIA::StateElement ProcessExecutor::state(double t)
         double du[9];
         m_spline->Evaluate(u, pt, du);
 
-        OSSIA::Tuple tuple;
+        ossia::Tuple tuple;
         if(!m_use_deriv)
         {
           tuple.value = {
-                OSSIA::Float{float(pt[0]) * m_scale.x() + m_origin.x()},
-                OSSIA::Float{float(pt[1]) * m_scale.y() + m_origin.y()},
-                OSSIA::Float{float(pt[2]) * m_scale.z() + m_origin.z()}};
+                ossia::Float{float(pt[0]) * m_scale.x() + m_origin.x()},
+                ossia::Float{float(pt[1]) * m_scale.y() + m_origin.y()},
+                ossia::Float{float(pt[2]) * m_scale.z() + m_origin.z()}};
         }
         else
         {
             double dt = t - m_prev_t;
             tuple.value = {
-                  OSSIA::Float{float((pt[0] - m_prev_pt[0]) / dt) * m_scale.x()},
-                  OSSIA::Float{float((pt[1] - m_prev_pt[1]) / dt) * m_scale.y()},
-                  OSSIA::Float{float((pt[2] - m_prev_pt[2]) / dt) * m_scale.z()}};
+                  ossia::Float{float((pt[0] - m_prev_pt[0]) / dt) * m_scale.x()},
+                  ossia::Float{float((pt[1] - m_prev_pt[1]) / dt) * m_scale.y()},
+                  ossia::Float{float((pt[2] - m_prev_pt[2]) / dt) * m_scale.z()}};
         }
 
         m_prev_pt[0] = pt[0];
@@ -97,13 +96,13 @@ OSSIA::StateElement ProcessExecutor::state(double t)
         m_prev_pt[2] = pt[2];
         m_prev_t = t;
 
-        return OSSIA::Message{m_addr, tuple};
+        return ossia::Message{m_addr, tuple};
     }
 
     return {};
 }
 
-OSSIA::StateElement ProcessExecutor::offset(OSSIA::TimeValue off)
+ossia::state_element ProcessExecutor::offset(ossia::time_value off)
 {
     return state(off / parent->getDurationNominal());
 }
