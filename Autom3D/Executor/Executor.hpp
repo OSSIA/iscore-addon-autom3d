@@ -22,8 +22,10 @@ namespace RecreateOnPlay
 class ConstraintElement;
 }
 namespace ossia {
-class State;
-class Address;
+class state;
+namespace net {
+class address_base;
+}
 }  // namespace OSSIA
 
 namespace Autom3D
@@ -54,7 +56,7 @@ class ProcessExecutor final :
         ossia::state m_start;
         ossia::state m_end;
 
-        std::shared_ptr<ossia::Address> m_addr;
+        ossia::net::address_base* m_addr{};
 
         vtkParametricSpline* m_spline{};
         Point m_scale;

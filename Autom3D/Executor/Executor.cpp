@@ -33,11 +33,11 @@ ProcessExecutor::ProcessExecutor(
     if(dev_it == devices.devices().end())
         return;
 
-    auto dev = dynamic_cast<Ossia::OSSIADevice*>(*dev_it);
+    auto dev = dynamic_cast<Ossia::Protocols::OSSIADevice*>(*dev_it);
     if(!dev)
         return;
 
-    auto node = iscore::convert::findNodeFromPath(addr.path, &dev->impl());
+    auto node = iscore::convert::findNodeFromPath(addr.path, *dev->getDevice());
     if(!node)
         return;
 
@@ -96,7 +96,7 @@ ossia::state_element ProcessExecutor::state(double t)
         m_prev_pt[2] = pt[2];
         m_prev_t = t;
 
-        return ossia::Message{m_addr, tuple};
+        return ossia::message{*m_addr, std::move(tuple)};
     }
 
     return {};
