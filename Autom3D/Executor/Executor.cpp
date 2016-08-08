@@ -3,8 +3,8 @@
 #include <vtkPoints.h>
 #include <iscore/tools/std/Algorithms.hpp>
 #include <Device/Protocol/DeviceInterface.hpp>
-#include <OSSIA/iscore2OSSIA.hpp>
-#include <OSSIA/Protocols/OSSIADevice.hpp>
+#include <Engine/iscore2OSSIA.hpp>
+#include <Engine/Protocols/OSSIADevice.hpp>
 #include <ossia/network/base/node.hpp>
 #include <ossia/editor/state/state_element.hpp>
 #include <ossia/editor/scenario/time_constraint.hpp>
@@ -33,11 +33,11 @@ ProcessExecutor::ProcessExecutor(
     if(dev_it == devices.devices().end())
         return;
 
-    auto dev = dynamic_cast<Ossia::Protocols::OSSIADevice*>(*dev_it);
+    auto dev = dynamic_cast<Engine::Network::OSSIADevice*>(*dev_it);
     if(!dev)
         return;
 
-    auto node = iscore::convert::findNodeFromPath(addr.path, *dev->getDevice());
+    auto node = Engine::iscore_to_ossia::findNodeFromPath(addr.path, *dev->getDevice());
     if(!node)
         return;
 

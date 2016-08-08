@@ -7,12 +7,12 @@ namespace Executor
 {
 
 Component::Component(
-        RecreateOnPlay::ConstraintElement& parentConstraint,
+        Engine::Execution::ConstraintElement& parentConstraint,
         ProcessModel& element,
-        const RecreateOnPlay::Context& ctx,
+        const Engine::Execution::Context& ctx,
         const Id<iscore::Component>& id,
         QObject* parent):
-    ::RecreateOnPlay::ProcessComponent_T<Autom3D::ProcessModel, ProcessExecutor>
+    ::Engine::Execution::ProcessComponent_T<Autom3D::ProcessModel, ProcessExecutor>
         {parentConstraint, element, ctx, id, "Autom3DComponent", parent}
 {
     auto proc = new ProcessExecutor(
