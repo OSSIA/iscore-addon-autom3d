@@ -6,14 +6,14 @@
 
 namespace Autom3D
 {
-class LayerModel;
+class Layer;
 class LayerView;
 class LayerPresenter final :
         public Process::LayerPresenter
 {
     public:
         explicit LayerPresenter(
-                const LayerModel& model,
+                const Layer& model,
                 LayerView* view,
                 const Process::ProcessPresenterContext& ctx,
                 QObject* parent);
@@ -28,13 +28,13 @@ class LayerPresenter final :
 
         void parentGeometryChanged() override;
 
-        const LayerModel& layerModel() const override;
+        const Layer& layerModel() const override;
         const ProcessModel& processModel() const
         { return static_cast<ProcessModel&>(m_layer.processModel()); }
         const Id<Process::ProcessModel>& modelId() const override;
 
     private:
-        const LayerModel& m_layer;
+        const Layer& m_layer;
         LayerView* m_view{};
         ZoomRatio m_ratio{1};
 };

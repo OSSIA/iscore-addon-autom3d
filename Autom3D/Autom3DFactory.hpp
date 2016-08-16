@@ -9,7 +9,7 @@ namespace Autom3D
 {
 using ProcessFactory = Process::GenericProcessFactory<
     Autom3D::ProcessModel,
-    Autom3D::LayerModel,
+    Autom3D::Layer,
     Autom3D::LayerPresenter,
     Autom3D::LayerView>;
 }

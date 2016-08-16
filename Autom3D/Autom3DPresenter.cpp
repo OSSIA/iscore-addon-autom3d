@@ -6,7 +6,7 @@
 namespace Autom3D
 {
 LayerPresenter::LayerPresenter(
-        const LayerModel& model,
+        const Layer& model,
         LayerView* view,
         const Process::ProcessPresenterContext& ctx,
         QObject* parent):
@@ -49,7 +49,7 @@ void LayerPresenter::parentGeometryChanged()
 {
 }
 
-const LayerModel& LayerPresenter::layerModel() const
+const Layer& LayerPresenter::layerModel() const
 {
     return m_layer;
 }

@@ -5,27 +5,27 @@ template <typename T> class Writer;
 
 namespace Autom3D
 {
-class LayerModel;
+class Layer;
 }
 /////// ViewModel
 template<>
-void Visitor<Reader<DataStream>>::readFrom(const Autom3D::LayerModel& lm)
+void Visitor<Reader<DataStream>>::readFrom(const Autom3D::Layer& lm)
 {
 }
 
 template<>
-void Visitor<Writer<DataStream>>::writeTo(Autom3D::LayerModel& lm)
+void Visitor<Writer<DataStream>>::writeTo(Autom3D::Layer& lm)
 {
 }
 
 
 
 template<>
-void Visitor<Reader<JSONObject>>::readFrom(const Autom3D::LayerModel& lm)
+void Visitor<Reader<JSONObject>>::readFrom(const Autom3D::Layer& lm)
 {
 }
 
 template<>
-void Visitor<Writer<JSONObject>>::writeTo(Autom3D::LayerModel& lm)
+void Visitor<Writer<JSONObject>>::writeTo(Autom3D::Layer& lm)
 {
 }
