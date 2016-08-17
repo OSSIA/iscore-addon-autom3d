@@ -28,13 +28,10 @@ file(GLOB_RECURSE HDRS
 )
 set(SRCS
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Autom3DSerialization.cpp"
-"${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Autom3DLayerSerialization.cpp"
 
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Autom3DModel.cpp"
-"${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Autom3DLayerModel.cpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Autom3DPresenter.cpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Autom3DView.cpp"
-"${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Autom3DPanelProxy.cpp"
 
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Commands/ChangeAddress.cpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/Autom3D/Commands/Autom3DCommandFactory.cpp"

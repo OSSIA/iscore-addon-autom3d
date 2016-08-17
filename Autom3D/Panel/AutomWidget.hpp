@@ -12,7 +12,7 @@ class vtkImageData;
 class QVTKWidget;
 namespace iscore
 {
-class CommandStackFacade;
+class DocumentContext;
 }
 namespace Autom3D
 {
@@ -23,7 +23,8 @@ class AutomWidget final : public QWidget
     public:
         AutomWidget(
                 const ProcessModel& proc,
-                const iscore::CommandStackFacade& stck);
+                const iscore::DocumentContext& stck,
+                QWidget* parent);
         ~AutomWidget();
 
         QImage getImage() const;

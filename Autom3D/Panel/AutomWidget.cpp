@@ -32,13 +32,16 @@
 #include <iscore/command/Dispatchers/CommandDispatcher.hpp>
 #include <Autom3D/Commands/ChangeAddress.hpp>
 #include <Autom3D/Autom3DModel.hpp>
+#include <iscore/document/DocumentContext.hpp>
 namespace Autom3D
 {
 
 AutomWidget::AutomWidget(
         const ProcessModel& proc,
-        const iscore::CommandStackFacade& stck):
-    m_disp{stck},
+        const iscore::DocumentContext& doc,
+        QWidget* parent):
+    QWidget{parent},
+    m_disp{doc.commandStack},
     m_proc{proc}
 {
     m_widget = new QVTKWidget;

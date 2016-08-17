@@ -6,7 +6,6 @@
 
 namespace Autom3D
 {
-class Layer;
 class LayerView;
 class LayerPresenter final :
         public Process::LayerPresenter
