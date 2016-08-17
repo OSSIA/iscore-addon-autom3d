@@ -34,9 +34,6 @@ ProcessState::ProcessState(
             */
 }
 
-QString ProcessState::stateName() const
-{ return "Autom3DState"; }
-
 // TESTME
 ::State::Message ProcessState::message() const
 {
