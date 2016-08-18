@@ -11,11 +11,9 @@
 #include <iscore/plugins/customfactory/FactorySetup.hpp>
 #include "iscore_plugin_autom3d.hpp"
 
-
-#if defined(ISCORE_LIB_INSPECTOR)
 #include <Autom3D/Inspector/Autom3DInspectorFactory.hpp>
 #include <Autom3D/Inspector/Autom3DStateInspectorFactory.hpp>
-#endif
+
 #include <iscore_plugin_autom3d_commands_files.hpp>
 #include <Autom3D/Autom3DFactory.hpp>
 #include <Autom3D/Executor/Component.hpp>
