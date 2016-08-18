@@ -40,11 +40,11 @@ std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3d
             iscore::ApplicationContext,
     TL<
         FW<Process::ProcessFactory,
-             Autom3D::ProcessFactory>,
+             Autom3D::ProcessFactory>,/*,
 #if defined(ISCORE_LIB_INSPECTOR)
         FW<Inspector::InspectorWidgetFactory,
              Autom3D::StateInspectorFactory>,
-#endif
+#endif*/
         FW<Process::InspectorWidgetDelegateFactory,
              Autom3D::InspectorFactory>,
         FW<Engine::Execution::ProcessComponentFactory,

@@ -1,3 +1,4 @@
+/*
 #include <QLabel>
 #include <list>
 #include <QVBoxLayout>
@@ -9,18 +10,13 @@
 #include <State/Message.hpp>
 #include <iscore/tools/Todo.hpp>
 
-class QWidget;
-namespace iscore {
-class Document;
-}  // namespace iscore
-
 namespace Autom3D
 {
 StateInspectorWidget::StateInspectorWidget(
         const ProcessState& object,
         const iscore::DocumentContext& doc,
         QWidget* parent):
-    InspectorWidgetBase{object, doc, parent},
+    StateProcessInspectorWidgetDelegate_T{object, parent},
     m_state{object},
     m_label{new QLabel}
 {
@@ -41,3 +37,4 @@ void StateInspectorWidget::on_stateChanged()
     m_label->setText(m_state.message().toString());
 }
 }
+*/

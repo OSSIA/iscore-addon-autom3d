@@ -1,29 +1,13 @@
 #pragma once
 #include <Process/Inspector/ProcessInspectorWidgetDelegateFactory.hpp>
-
-class InspectorWidgetBase;
-class QObject;
-class QString;
-class QWidget;
-namespace iscore {
-struct DocumentContext;
-}  // namespace iscore
-
+#include <Autom3D/Autom3DModel.hpp>
+#include <Autom3D/Inspector/Autom3DInspectorWidget.hpp>
 
 namespace Autom3D
 {
-class InspectorFactory final : public Process::InspectorWidgetDelegateFactory
+class InspectorFactory final :
+        public Process::InspectorWidgetDelegateFactory_T<ProcessModel, InspectorWidget>
 {
         ISCORE_CONCRETE_FACTORY("d312d001-b91f-42f0-8780-7e3a587c6ffc")
-    public:
-        InspectorFactory() = default;
-
-    private:
-        Process::InspectorWidgetDelegate* make(
-                const Process::ProcessModel&,
-                const iscore::DocumentContext& doc,
-                QWidget* parent) const override;
-        bool matches(const Process::ProcessModel&) const override;
-
 };
 }

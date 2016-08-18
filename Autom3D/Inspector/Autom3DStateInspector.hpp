@@ -1,17 +1,14 @@
+/*
 #pragma once
-
-#include <Inspector/InspectorWidgetBase.hpp>
+#include <Process/Inspector/ProcessInspectorWidgetDelegate.hpp>
+#include <Autom3D/State/Autom3DState.hpp>
 
 class QLabel;
-class QWidget;
-namespace iscore {
-class Document;
-}  // namespace iscore
-
 namespace Autom3D
 {
 class ProcessState;
-class StateInspectorWidget final : public Inspector::InspectorWidgetBase
+class StateInspectorWidget final :
+        public Process::StateProcessInspectorWidgetDelegate_T<ProcessState>
 {
     public:
         explicit StateInspectorWidget(
@@ -26,3 +23,4 @@ class StateInspectorWidget final : public Inspector::InspectorWidgetBase
         QLabel* m_label{};
 };
 }
+*/

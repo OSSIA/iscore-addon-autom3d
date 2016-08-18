@@ -35,6 +35,7 @@ class ChangeAddress final : public iscore::SerializableCommand
         Device::FullAddressSettings m_old, m_new;
 };
 
+// MOVEME
 class UpdateSpline final : public iscore::SerializableCommand
 {
         ISCORE_COMMAND_DECL(CommandFactoryName(), UpdateSpline, "UpdateSpline")
