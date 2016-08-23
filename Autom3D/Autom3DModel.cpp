@@ -48,7 +48,7 @@ ProcessModel::ProcessModel(
 
 QString ProcessModel::prettyName() const
 {
-    return metadata.name() + " : " + address().toString();
+    return metadata.getName() + " : " + address().toString();
 }
 
 ProcessState* ProcessModel::startStateData() const

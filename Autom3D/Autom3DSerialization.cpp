@@ -87,7 +87,7 @@ void Visitor<Writer<JSONValue>>::writeTo(Autom3D::Point& pt)
 template<>
 void Visitor<Reader<JSONObject>>::readFrom_impl(const Autom3D::ProcessModel& autom)
 {
-    m_obj[iscore::StringConstant().Address] = toJsonObject(autom.address());
+    m_obj[strings.Address] = toJsonObject(autom.address());
     m_obj["Min"] = toJsonValue(autom.min());
     m_obj["Max"] = toJsonValue(autom.max());
     m_obj["Handles"] = toJsonValueArray(autom.handles());
@@ -96,7 +96,7 @@ void Visitor<Reader<JSONObject>>::readFrom_impl(const Autom3D::ProcessModel& aut
 template<>
 void Visitor<Writer<JSONObject>>::writeTo(Autom3D::ProcessModel& autom)
 {
-    autom.setAddress(fromJsonObject<State::Address>(m_obj[iscore::StringConstant().Address]));
+    autom.setAddress(fromJsonObject<State::Address>(m_obj[strings.Address]));
     autom.setMin(fromJsonValue<Autom3D::Point>(m_obj["Min"]));
     autom.setMax(fromJsonValue<Autom3D::Point>(m_obj["Max"]));
 
