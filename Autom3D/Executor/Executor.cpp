@@ -29,22 +29,7 @@ ProcessExecutor::ProcessExecutor(
 {
     // Load the address
     // Look for the real node in the device
-    auto dev_p = devices.findDevice(addr.device);
-    if(!dev_p)
-        return;
-
-    auto dev = dynamic_cast<Engine::Network::OSSIADevice*>(dev_p);
-    if(!dev)
-        return;
-
-    auto node = Engine::iscore_to_ossia::findNodeFromPath(addr.path, *dev->getDevice());
-    if(!node)
-        return;
-
-    // Add the real address
-    m_addr = node->getAddress();
-    if(!m_addr)
-        return;
+    m_addr = Engine::iscore_to_ossia::findAddress(m_devices, addr);
 
     // Load the spline
     auto points = vtkPoints::New();
