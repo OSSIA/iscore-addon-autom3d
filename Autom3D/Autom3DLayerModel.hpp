@@ -7,4 +7,10 @@ namespace Autom3D
 using Layer = Process::LayerModel_T<ProcessModel>;
 }
 
-DEFAULT_MODEL_METADATA(Autom3D::Layer, "Autom3DLayer")
+LAYER_METADATA(
+        ,
+        Autom3D::Layer,
+        "c59dd759-31ba-494b-b105-ecf952e0c389",
+        "Autom3DLayer",
+        "Autom3DLayer"
+        )

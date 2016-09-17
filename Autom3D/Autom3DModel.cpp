@@ -25,7 +25,7 @@ ProcessModel::ProcessModel(
     m_startState{new ProcessState{*this, 0., this}},
     m_endState{new ProcessState{*this, 1., this}}
 {
-    metadata().setName(QString("Autom3D.%1").arg(*this->id().val()));
+    metadata().setName(QString("Autom3D.%1").arg(this->id().val()));
     m_handles.emplace_back(-0.5, -0.5, -0.5);
     m_handles.emplace_back(0, 0, 0);
     m_handles.emplace_back(0.5, 0.5, 0.5);
@@ -43,7 +43,7 @@ ProcessModel::ProcessModel(
     m_startState{new ProcessState{*this, 0., this}},
     m_endState{new ProcessState{*this, 1., this}}
 {
-    metadata().setName(QString("Autom3D.%1").arg(*this->id().val()));
+    metadata().setName(QString("Autom3D.%1").arg(this->id().val()));
 }
 
 QString ProcessModel::prettyName() const

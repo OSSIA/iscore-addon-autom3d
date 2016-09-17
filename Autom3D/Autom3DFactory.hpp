@@ -9,12 +9,13 @@
 #include <Process/WidgetLayer/WidgetLayerPanelProxy.hpp>
 namespace Autom3D
 {
-using ProcessFactory = Process::GenericProcessFactory<
-    Autom3D::ProcessModel,
-    Autom3D::Layer,
-    Autom3D::LayerPresenter,
-    Autom3D::LayerView,
-    WidgetLayer::LayerPanelProxy<Autom3D::ProcessModel, AutomWidget>>;
+using ProcessFactory = Process::GenericProcessModelFactory<Autom3D::ProcessModel>;
+using LayerFactory = Process::GenericLayerFactory<
+Autom3D::ProcessModel,
+Autom3D::Layer,
+Autom3D::LayerPresenter,
+Autom3D::LayerView,
+WidgetLayer::LayerPanelProxy<Autom3D::ProcessModel, AutomWidget>>;
 }
 
 

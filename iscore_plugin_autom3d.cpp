@@ -37,8 +37,11 @@ std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3d
     return instantiate_factories<
             iscore::ApplicationContext,
     TL<
-        FW<Process::ProcessFactory,
-             Autom3D::ProcessFactory>,/*,
+        FW<Process::ProcessModelFactory,
+             Autom3D::ProcessFactory>,
+        FW<Process::LayerFactory,
+            Autom3D::LayerFactory>,
+            /*,
 #if defined(ISCORE_LIB_INSPECTOR)
         FW<Inspector::InspectorWidgetFactory,
              Autom3D::StateInspectorFactory>,
