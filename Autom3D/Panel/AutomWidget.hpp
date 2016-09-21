@@ -12,7 +12,7 @@ class vtkImageData;
 class QVTKWidget;
 namespace iscore
 {
-class DocumentContext;
+struct DocumentContext;
 }
 namespace Autom3D
 {

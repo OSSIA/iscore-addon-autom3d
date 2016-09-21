@@ -7,7 +7,6 @@
 #include <Autom3D/Point.hpp>
 
 class vtkParametricSpline;
-class DeviceDocumentPlugin;
 
 namespace Device
 {
