@@ -47,7 +47,7 @@ ProcessExecutor::~ProcessExecutor()
 
 ossia::state_element ProcessExecutor::state()
 {
-    return state(parent->getPosition());
+    return state(parent()->getPosition());
 }
 
 ossia::state_element ProcessExecutor::state(double t)
@@ -89,7 +89,7 @@ ossia::state_element ProcessExecutor::state(double t)
 
 ossia::state_element ProcessExecutor::offset(ossia::time_value off)
 {
-    return state(off / parent->getDurationNominal());
+    return state(off / parent()->getDurationNominal());
 }
 
 }
