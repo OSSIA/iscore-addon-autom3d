@@ -81,7 +81,7 @@ ossia::state_element ProcessExecutor::state(double t)
         m_prev_pt[2] = pt[2];
         m_prev_t = t;
 
-        return ossia::message{*m_addr, std::move(tuple)};
+        return ossia::message{*m_addr, std::move(tuple), {}};
     }
 
     return {};
