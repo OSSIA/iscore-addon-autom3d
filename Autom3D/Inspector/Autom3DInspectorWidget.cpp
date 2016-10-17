@@ -1,5 +1,5 @@
 
-#include <Explorer/Widgets/AddressEditWidget.hpp>
+#include <Explorer/Widgets/AddressAccessorEditWidget.hpp>
 #include <iscore/widgets/SpinBoxes.hpp>
 #include <QBoxLayout>
 #include <QFormLayout>
@@ -50,7 +50,7 @@ InspectorWidget::InspectorWidget(
     DeviceExplorerModel* explorer{};
     if(plug)
         explorer = &plug->explorer();
-    m_lineEdit = new AddressEditWidget{explorer, this};
+    m_lineEdit = new AddressAccessorEditWidget{explorer, this};
 
     m_lineEdit->setAddress(process().address());
     con(process(), &ProcessModel::addressChanged,

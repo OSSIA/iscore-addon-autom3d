@@ -30,7 +30,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         MODEL_METADATA_IMPL(Autom3D::ProcessModel)
 
         Q_OBJECT
-        Q_PROPERTY(::State::Address address READ address WRITE setAddress NOTIFY addressChanged)
+        Q_PROPERTY(::State::AddressAccessor address READ address WRITE setAddress NOTIFY addressChanged)
         // Min and max to scale the curve with at execution
         Q_PROPERTY(Point min READ min WRITE setMin NOTIFY minChanged)
         Q_PROPERTY(Point max READ max WRITE setMax NOTIFY maxChanged)
@@ -62,7 +62,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         Point min() const;
         Point max() const;
 
-        void setAddress(const ::State::Address& arg);
+        void setAddress(const ::State::AddressAccessor& arg);
 
         void setMin(Point arg);
         void setMax(Point arg);
@@ -103,7 +103,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         { m_useDerivative = b; }
 
     signals:
-        void addressChanged(const ::State::Address& arg);
+        void addressChanged(const ::State::AddressAccessor& arg);
 
         void minChanged(Point arg);
         void maxChanged(Point arg);
