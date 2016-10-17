@@ -97,9 +97,9 @@ void AutomImage::on_handlesChanged()
     spl->SetNumberOfPoints(0);
 
     auto newPoints = vtkPoints::New();
-    for(const Point& pt : m_proc.handles())
+    for(const State::vec3f& pt : m_proc.handles())
     {
-        newPoints->InsertNextPoint(pt.x(), pt.y(), pt.z());
+        newPoints->InsertNextPoint(pt[0], pt[1], pt[2]);
     }
     spl->SetNumberOfPoints(newPoints->GetNumberOfPoints());
     rep->InitializeHandles(newPoints);

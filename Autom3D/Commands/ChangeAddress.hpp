@@ -43,7 +43,7 @@ class UpdateSpline final : public iscore::SerializableCommand
     public:
         UpdateSpline(
                 Path<ProcessModel>&& path,
-                std::vector<Point>&& newHandles);
+                std::vector<State::vec3f>&& newHandles);
 
     public:
         void undo() const override;
@@ -55,7 +55,7 @@ class UpdateSpline final : public iscore::SerializableCommand
 
     private:
         Path<ProcessModel> m_path;
-        std::vector<Point> m_old;
-        std::vector<Point> m_new;
+        std::vector<State::vec3f> m_old;
+        std::vector<State::vec3f> m_new;
 };
 }

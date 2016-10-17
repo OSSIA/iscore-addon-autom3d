@@ -38,10 +38,10 @@ class ProcessExecutor final :
     public:
         ProcessExecutor(
                 const State::AddressAccessor& addr,
-                const std::vector<Point>& spline,
+                const std::vector<State::vec3f>& spline,
                 const Device::DeviceList& devices,
-                Point scale,
-                Point origin,
+                State::vec3f scale,
+                State::vec3f origin,
                 bool deriv);
         ~ProcessExecutor();
 
@@ -50,16 +50,12 @@ class ProcessExecutor final :
         ossia::state_element offset(ossia::time_value) override;
 
     private:
-        const Device::DeviceList& m_devices;
-
-        ossia::state m_start;
-        ossia::state m_end;
-
         ossia::net::address_base* m_addr{};
 
         vtkParametricSpline* m_spline{};
-        Point m_scale;
-        Point m_origin;
+        State::vec3f m_scale;
+        State::vec3f m_origin;
+        ossia::message m_message;
 
         double m_prev_t = 0;
         double m_prev_pt[3]{};

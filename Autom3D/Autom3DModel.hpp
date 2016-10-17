@@ -32,8 +32,11 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         Q_OBJECT
         Q_PROPERTY(::State::AddressAccessor address READ address WRITE setAddress NOTIFY addressChanged)
         // Min and max to scale the curve with at execution
-        Q_PROPERTY(Point min READ min WRITE setMin NOTIFY minChanged)
-        Q_PROPERTY(Point max READ max WRITE setMax NOTIFY maxChanged)
+        Q_PROPERTY(State::vec3f min READ min WRITE setMin NOTIFY minChanged)
+        Q_PROPERTY(State::vec3f max READ max WRITE setMax NOTIFY maxChanged)
+        Q_PROPERTY(State::vec3f scale READ scale WRITE setScale NOTIFY scaleChanged)
+        Q_PROPERTY(State::vec3f origin READ origin WRITE setOrigin NOTIFY originChanged)
+        Q_PROPERTY(bool useDerivative READ useDerivative WRITE setUseDerivative NOTIFY useDerivativeChanged)
 
     public:
         ProcessModel(const TimeValue& duration,
@@ -59,24 +62,24 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         //// Autom3DModel specifics ////
         ::State::AddressAccessor address() const;
 
-        Point min() const;
-        Point max() const;
+        State::vec3f min() const;
+        State::vec3f max() const;
 
         void setAddress(const ::State::AddressAccessor& arg);
 
-        void setMin(Point arg);
-        void setMax(Point arg);
+        void setMin(State::vec3f arg);
+        void setMax(State::vec3f arg);
 
-        const std::vector<Point>& handles() const;
-        void setHandles(const std::vector<Point>& hdl);
+        const std::vector<State::vec3f>& handles() const;
+        void setHandles(const std::vector<State::vec3f>& hdl);
 
-        void setScale(Point p);
+        void setScale(State::vec3f p);
 
-        Point scale();
+        State::vec3f scale() const;
 
-        void setOrigin(Point p);
+        void setOrigin(State::vec3f p);
 
-        Point origin();
+        State::vec3f origin() const;
 
         bool useDerivative() const;
         void setUseDerivative(bool b);
@@ -84,13 +87,15 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
     signals:
         void addressChanged(const ::State::AddressAccessor& arg);
 
-        void minChanged(Point arg);
-        void maxChanged(Point arg);
+        void minChanged(State::vec3f arg);
+        void maxChanged(State::vec3f arg);
 
-        void scaleChanged(Point arg);
-        void originChanged(Point arg);
+        void scaleChanged(State::vec3f arg);
+        void originChanged(State::vec3f arg);
 
         void handlesChanged();
+
+        void useDerivativeChanged(bool);
 
     protected:
         ProcessModel(const ProcessModel& source,
@@ -100,17 +105,17 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
     private:
         ::State::AddressAccessor m_address;
 
-        Point m_min{};
-        Point m_max{};
+        State::vec3f m_min{};
+        State::vec3f m_max{};
 
-        Point m_scale{50, 50, 50};
-        Point m_origin{500, 500, 500};
+        State::vec3f m_scale{50, 50, 50};
+        State::vec3f m_origin{500, 500, 500};
 
         bool m_useDerivative = false;
 
-        std::vector<Point> m_handles;
+        std::vector<State::vec3f> m_handles;
         ProcessState* m_startState{};
         ProcessState* m_endState{};
 };
 }
-Q_DECLARE_METATYPE(Autom3D::Point)
+

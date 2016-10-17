@@ -135,14 +135,14 @@ void AutomWidget::release(vtkObject* obj)
     auto spl = vtkSplineRepresentation::SafeDownCast(m_spline->GetRepresentation())->GetParametricSpline();
     auto& pts = *spl->GetPoints();
 
-    std::vector<Point> handles;
+    std::vector<State::vec3f> handles;
     int n = pts.GetNumberOfPoints();
     handles.reserve(n);
     for(int i = 0; i < n; i++)
     {
         double pt[3];
         pts.GetPoint(i, pt);
-        handles.emplace_back(pt[0], pt[1], pt[2]);
+        handles.push_back({pt[0], pt[1], pt[2]});
     }
 
     auto cmd = new UpdateSpline{m_proc, std::move(handles)};
@@ -188,9 +188,9 @@ void AutomWidget::on_handlesChanged()
     spl->SetNumberOfPoints(0);
 
     auto newPoints = vtkPoints::New();
-    for(const Point& pt : m_proc.handles())
+    for(const State::vec3f& pt : m_proc.handles())
     {
-        newPoints->InsertNextPoint(pt.x(), pt.y(), pt.z());
+        newPoints->InsertNextPoint(pt[0], pt[1], pt[2]);
     }
     spl->SetNumberOfPoints(newPoints->GetNumberOfPoints());
     rep->InitializeHandles(newPoints);

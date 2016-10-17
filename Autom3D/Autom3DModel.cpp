@@ -26,9 +26,9 @@ ProcessModel::ProcessModel(
     m_endState{new ProcessState{*this, 1., this}}
 {
     metadata().setInstanceName(*this);
-    m_handles.emplace_back(-0.5, -0.5, -0.5);
-    m_handles.emplace_back(0, 0, 0);
-    m_handles.emplace_back(0.5, 0.5, 0.5);
+    m_handles.push_back({-0.5, -0.5, -0.5});
+    m_handles.push_back({0, 0, 0});
+    m_handles.push_back({0.5, 0.5, 0.5});
 }
 
 ProcessModel::ProcessModel(
@@ -66,12 +66,12 @@ ProcessState* ProcessModel::endStateData() const
     return m_address;
 }
 
-Point ProcessModel::min() const
+State::vec3f ProcessModel::min() const
 {
     return m_min;
 }
 
-Point ProcessModel::max() const
+State::vec3f ProcessModel::max() const
 {
     return m_max;
 }
@@ -87,7 +87,7 @@ void ProcessModel::setAddress(const State::AddressAccessor &arg)
     emit addressChanged(arg);
 }
 
-void ProcessModel::setMin(Point arg)
+void ProcessModel::setMin(State::vec3f arg)
 {
     if (m_min == arg)
         return;
@@ -96,7 +96,7 @@ void ProcessModel::setMin(Point arg)
     emit minChanged(arg);
 }
 
-void ProcessModel::setMax(Point arg)
+void ProcessModel::setMax(State::vec3f arg)
 {
     if (m_max == arg)
         return;
@@ -105,40 +105,54 @@ void ProcessModel::setMax(Point arg)
     emit maxChanged(arg);
 }
 
-const std::vector<Point>& ProcessModel::handles() const
+const std::vector<State::vec3f>& ProcessModel::handles() const
 { return m_handles; }
 
-void ProcessModel::setHandles(const std::vector<Point>& hdl)
+void ProcessModel::setHandles(const std::vector<State::vec3f>& hdl)
 {
-  m_handles = hdl;
-  emit handlesChanged();
+    m_handles = hdl;
+    emit handlesChanged();
 }
 
-void ProcessModel::setScale(Point p)
+void ProcessModel::setScale(State::vec3f p)
 {
-  m_scale = p;
-  emit scaleChanged(p);
+    if(m_scale != p)
+    {
+        m_scale = p;
+        emit scaleChanged(p);
+    }
 }
 
-Point ProcessModel::scale()
+State::vec3f ProcessModel::scale() const
 {
-  return m_scale;
+    return m_scale;
 }
 
-void ProcessModel::setOrigin(Point p)
+void ProcessModel::setOrigin(State::vec3f p)
 {
-  m_origin = p;
-  emit originChanged(p);
+    if(m_origin != p)
+    {
+        m_origin = p;
+        emit originChanged(p);
+    }
 }
 
-Point ProcessModel::origin()
+State::vec3f ProcessModel::origin() const
 {
-  return m_origin;
+    return m_origin;
 }
 
 bool ProcessModel::useDerivative() const
-{ return m_useDerivative; }
+{
+    return m_useDerivative;
+}
 
 void ProcessModel::setUseDerivative(bool b)
-{ m_useDerivative = b; }
+{
+    if(b != m_useDerivative)
+    {
+        m_useDerivative = b;
+        emit useDerivativeChanged(b);
+    }
+}
 }

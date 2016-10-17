@@ -14,28 +14,39 @@ namespace Autom3D
 namespace Executor
 {
 
+static ossia::message make_message(
+        const State::AddressAccessor& addr,
+        const Device::DeviceList& devices)
+{
+    auto res = Engine::iscore_to_ossia::findAddress(devices, addr.address);
+    if(res)
+    {
+        return ossia::message{{*res , addr.qualifiers.accessors}, {}, addr.qualifiers.unit};
+    }
+    else
+    {
+        throw std::runtime_error("Unable to find address: " + addr.toString().toStdString());
+    }
+}
+
 ProcessExecutor::ProcessExecutor(
         const State::AddressAccessor& addr,
-        const std::vector<Point>& spline,
+        const std::vector<State::vec3f>& spline,
         const Device::DeviceList& devices,
-        Point scale,
-        Point origin,
+        State::vec3f scale,
+        State::vec3f origin,
         bool deriv):
-    m_devices{devices},
     m_spline{vtkParametricSpline::New()},
     m_scale{scale},
     m_origin{origin},
+    m_message{make_message(addr, devices)},
     m_use_deriv{deriv}
 {
-    // Load the address
-    // Look for the real node in the device
-    m_addr = Engine::iscore_to_ossia::findAddress(m_devices, addr.address);
-
     // Load the spline
     auto points = vtkPoints::New();
-    for(const Point& pt : spline)
+    for(const State::vec3f& pt : spline)
     {
-        points->InsertNextPoint(pt.x(), pt.y(), pt.z());
+        points->InsertNextPoint(pt[0], pt[1], pt[2]);
     }
     m_spline->SetPoints(points);
 }
@@ -52,37 +63,33 @@ ossia::state_element ProcessExecutor::state()
 
 ossia::state_element ProcessExecutor::state(double t)
 {
-    if(m_addr)
+    double u[3]{t, 0, 0};
+    double pt[3];
+    double du[9];
+    m_spline->Evaluate(u, pt, du);
+
+    ossia::Vec3f vec;
+    if(!m_use_deriv)
     {
-        double u[3]{t, 0, 0};
-        double pt[3];
-        double du[9];
-        m_spline->Evaluate(u, pt, du);
-
-        ossia::Vec3f vec;
-        if(!m_use_deriv)
-        {
-          vec.value = {float(pt[0]) * m_scale.x() + m_origin.x(),
-                       float(pt[1]) * m_scale.y() + m_origin.y(),
-                       float(pt[2]) * m_scale.z() + m_origin.z()};
-        }
-        else
-        {
-            double dt = t - m_prev_t;
-            vec.value = { float((pt[0] - m_prev_pt[0]) / dt) * m_scale.x(),
-                          float((pt[1] - m_prev_pt[1]) / dt) * m_scale.y(),
-                          float((pt[2] - m_prev_pt[2]) / dt) * m_scale.z()};
-        }
-
-        m_prev_pt[0] = pt[0];
-        m_prev_pt[1] = pt[1];
-        m_prev_pt[2] = pt[2];
-        m_prev_t = t;
-
-        return ossia::message{*m_addr, std::move(vec), {}};
+        vec.value = {float(pt[0]) * m_scale[0] + m_origin[0],
+                     float(pt[1]) * m_scale[1] + m_origin[1],
+                     float(pt[2]) * m_scale[2] + m_origin[2]};
+    }
+    else
+    {
+        double dt = t - m_prev_t;
+        vec.value = { float((pt[0] - m_prev_pt[0]) / dt) * m_scale[0],
+                      float((pt[1] - m_prev_pt[1]) / dt) * m_scale[1],
+                      float((pt[2] - m_prev_pt[2]) / dt) * m_scale[2]};
     }
 
-    return {};
+    m_prev_pt[0] = pt[0];
+    m_prev_pt[1] = pt[1];
+    m_prev_pt[2] = pt[2];
+    m_prev_t = t;
+
+    m_message.value = vec;
+    return m_message;
 }
 
 ossia::state_element ProcessExecutor::offset(ossia::time_value off)

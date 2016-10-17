@@ -27,8 +27,8 @@ ChangeAddress::ChangeAddress(
 
     // Get the current data.
     m_oldAddress = autom.address();
-    m_oldDomain.min.val = toTuple(autom.min());
-    m_oldDomain.max.val = toTuple(autom.max());
+    m_oldDomain.min.val = autom.min();
+    m_oldDomain.max.val = autom.max();
 
     if(auto deviceexplorer = Explorer::try_deviceExplorerFromObject(autom))
     {
@@ -64,8 +64,8 @@ void ChangeAddress::undo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(fromTuple(::State::convert::value<State::vec3f>(m_oldDomain.min)));
-    autom.setMax(fromTuple(::State::convert::value<State::vec3f>(m_oldDomain.max)));
+    autom.setMin(State::convert::value<State::vec3f>(m_oldDomain.min));
+    autom.setMax(State::convert::value<State::vec3f>(m_oldDomain.max));
 
     autom.setAddress(m_oldAddress);
 }
@@ -74,8 +74,8 @@ void ChangeAddress::redo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(fromTuple(::State::convert::value<State::vec3f>(m_newDomain.min)));
-    autom.setMax(fromTuple(::State::convert::value<State::vec3f>(m_newDomain.max)));
+    autom.setMin(State::convert::value<State::vec3f>(m_newDomain.min));
+    autom.setMax(State::convert::value<State::vec3f>(m_newDomain.max));
 
     autom.setAddress(m_newAddress);
 }
@@ -95,7 +95,7 @@ void ChangeAddress::deserializeImpl(DataStreamOutput & s)
 
 UpdateSpline::UpdateSpline(
         Path<ProcessModel> &&path,
-        std::vector<Point>&& newHandles):
+        std::vector<State::vec3f>&& newHandles):
     m_path{std::move(path)},
     m_new{std::move(newHandles)}
 {
