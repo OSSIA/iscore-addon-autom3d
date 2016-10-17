@@ -5,28 +5,13 @@
 namespace Autom3D
 {
 using Point = QVector3D;
-inline State::tuple_t toTuple(Point p)
+inline State::vec3f toTuple(Point p)
 {
-    return {
-        State::ValueImpl{p.x()},
-        State::ValueImpl{p.y()},
-        State::ValueImpl{p.z()}
-    };
+    return {p.x(), p.y(), p.z()};
 }
 
-inline Point fromTuple(State::tuple_t t)
+inline Point fromTuple(State::vec3f t)
 {
-    if(t.size() >= 3)
-    {
-    return {
-        State::convert::value<float>(t[0]),
-        State::convert::value<float>(t[1]),
-        State::convert::value<float>(t[2])
-    };
-    }
-    else
-    {
-        return {0., 0., 0.};
-    }
+    return {t[0], t[1], t[2]};
 }
 }

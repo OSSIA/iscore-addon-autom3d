@@ -16,7 +16,7 @@ struct Address;
 }
 namespace Explorer
 {
-class AddressEditWidget;
+class AddressAccessorEditWidget;
 class DeviceExplorerModel;
 }
 class QDoubleSpinBox;
@@ -34,10 +34,10 @@ class InspectorWidget final :
                 QWidget* parent);
 
     public slots:
-        void on_addressChange(const ::State::Address& newText);
+        void on_addressChange(const ::State::AddressAccessor& newText);
 
     private:
-        Explorer::AddressEditWidget* m_lineEdit{};
+        Explorer::AddressAccessorEditWidget* m_lineEdit{};
 
         CommandDispatcher<> m_dispatcher;
 };

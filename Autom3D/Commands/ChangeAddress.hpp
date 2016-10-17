@@ -20,7 +20,7 @@ class ChangeAddress final : public iscore::SerializableCommand
     public:
         ChangeAddress(
                 Path<ProcessModel>&& path,
-                const State::Address& newval);
+                const State::AddressAccessor& newval);
 
     public:
         void undo() const override;
@@ -32,7 +32,8 @@ class ChangeAddress final : public iscore::SerializableCommand
 
     private:
         Path<ProcessModel> m_path;
-        Device::FullAddressSettings m_old, m_new;
+        State::AddressAccessor m_oldAddress, m_newAddress;
+        Device::Domain m_oldDomain, m_newDomain;
 };
 
 // MOVEME

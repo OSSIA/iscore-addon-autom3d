@@ -54,9 +54,9 @@ InspectorWidget::InspectorWidget(
 
     m_lineEdit->setAddress(process().address());
     con(process(), &ProcessModel::addressChanged,
-            m_lineEdit, &AddressEditWidget::setAddress);
+            m_lineEdit, &AddressAccessorEditWidget::setAddress);
 
-    connect(m_lineEdit, &AddressEditWidget::addressChanged,
+    connect(m_lineEdit, &AddressAccessorEditWidget::addressChanged,
             this, &InspectorWidget::on_addressChange);
 
     vlay->addWidget(m_lineEdit);
@@ -65,13 +65,13 @@ InspectorWidget::InspectorWidget(
     this->setLayout(vlay);
 }
 
-void InspectorWidget::on_addressChange(const ::State::Address& newAddr)
+void InspectorWidget::on_addressChange(const ::State::AddressAccessor& newAddr)
 {
     // Various checks
     if(newAddr == process().address())
         return;
 
-    if(newAddr.path.isEmpty())
+    if(newAddr.address.path.isEmpty())
         return;
 
     auto cmd = new ChangeAddress{process(), newAddr};

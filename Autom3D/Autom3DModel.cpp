@@ -61,7 +61,7 @@ ProcessState* ProcessModel::endStateData() const
     return m_endState;
 }
 
-::State::Address ProcessModel::address() const
+::State::AddressAccessor ProcessModel::address() const
 {
     return m_address;
 }
@@ -76,7 +76,7 @@ Point ProcessModel::max() const
     return m_max;
 }
 
-void ProcessModel::setAddress(const ::State::Address &arg)
+void ProcessModel::setAddress(const State::AddressAccessor &arg)
 {
     if(m_address == arg)
     {
@@ -104,4 +104,41 @@ void ProcessModel::setMax(Point arg)
     m_max = arg;
     emit maxChanged(arg);
 }
+
+const std::vector<Point>& ProcessModel::handles() const
+{ return m_handles; }
+
+void ProcessModel::setHandles(const std::vector<Point>& hdl)
+{
+  m_handles = hdl;
+  emit handlesChanged();
+}
+
+void ProcessModel::setScale(Point p)
+{
+  m_scale = p;
+  emit scaleChanged(p);
+}
+
+Point ProcessModel::scale()
+{
+  return m_scale;
+}
+
+void ProcessModel::setOrigin(Point p)
+{
+  m_origin = p;
+  emit originChanged(p);
+}
+
+Point ProcessModel::origin()
+{
+  return m_origin;
+}
+
+bool ProcessModel::useDerivative() const
+{ return m_useDerivative; }
+
+void ProcessModel::setUseDerivative(bool b)
+{ m_useDerivative = b; }
 }

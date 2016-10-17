@@ -57,7 +57,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         ProcessState* endStateData() const override;
 
         //// Autom3DModel specifics ////
-        ::State::Address address() const;
+        ::State::AddressAccessor address() const;
 
         Point min() const;
         Point max() const;
@@ -67,40 +67,19 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
         void setMin(Point arg);
         void setMax(Point arg);
 
-        auto& handles() const
-        { return m_handles; }
-        void setHandles(const std::vector<Point>& hdl)
-        {
-            m_handles = hdl;
-            emit handlesChanged();
-        }
+        const std::vector<Point>& handles() const;
+        void setHandles(const std::vector<Point>& hdl);
 
-        void setScale(Point p)
-        {
-            m_scale = p;
-            emit scaleChanged(p);
-        }
+        void setScale(Point p);
 
-        Point scale()
-        {
-            return m_scale;
-        }
+        Point scale();
 
-        void setOrigin(Point p)
-        {
-            m_origin = p;
-            emit originChanged(p);
-        }
+        void setOrigin(Point p);
 
-        Point origin()
-        {
-            return m_origin;
-        }
+        Point origin();
 
-        bool useDerivative() const
-        { return m_useDerivative; }
-        void setUseDerivative(bool b)
-        { m_useDerivative = b; }
+        bool useDerivative() const;
+        void setUseDerivative(bool b);
 
     signals:
         void addressChanged(const ::State::AddressAccessor& arg);
@@ -119,7 +98,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
                         QObject* parent);
 
     private:
-        ::State::Address m_address;
+        ::State::AddressAccessor m_address;
 
         Point m_min{};
         Point m_max{};

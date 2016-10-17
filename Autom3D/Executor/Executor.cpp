@@ -15,7 +15,7 @@ namespace Executor
 {
 
 ProcessExecutor::ProcessExecutor(
-        const State::Address& addr,
+        const State::AddressAccessor& addr,
         const std::vector<Point>& spline,
         const Device::DeviceList& devices,
         Point scale,
@@ -29,7 +29,7 @@ ProcessExecutor::ProcessExecutor(
 {
     // Load the address
     // Look for the real node in the device
-    m_addr = Engine::iscore_to_ossia::findAddress(m_devices, addr);
+    m_addr = Engine::iscore_to_ossia::findAddress(m_devices, addr.address);
 
     // Load the spline
     auto points = vtkPoints::New();
@@ -59,21 +59,19 @@ ossia::state_element ProcessExecutor::state(double t)
         double du[9];
         m_spline->Evaluate(u, pt, du);
 
-        ossia::Tuple tuple;
+        ossia::Vec3f vec;
         if(!m_use_deriv)
         {
-          tuple.value = {
-                ossia::Float{float(pt[0]) * m_scale.x() + m_origin.x()},
-                ossia::Float{float(pt[1]) * m_scale.y() + m_origin.y()},
-                ossia::Float{float(pt[2]) * m_scale.z() + m_origin.z()}};
+          vec.value = {float(pt[0]) * m_scale.x() + m_origin.x(),
+                       float(pt[1]) * m_scale.y() + m_origin.y(),
+                       float(pt[2]) * m_scale.z() + m_origin.z()};
         }
         else
         {
             double dt = t - m_prev_t;
-            tuple.value = {
-                  ossia::Float{float((pt[0] - m_prev_pt[0]) / dt) * m_scale.x()},
-                  ossia::Float{float((pt[1] - m_prev_pt[1]) / dt) * m_scale.y()},
-                  ossia::Float{float((pt[2] - m_prev_pt[2]) / dt) * m_scale.z()}};
+            vec.value = { float((pt[0] - m_prev_pt[0]) / dt) * m_scale.x(),
+                          float((pt[1] - m_prev_pt[1]) / dt) * m_scale.y(),
+                          float((pt[2] - m_prev_pt[2]) / dt) * m_scale.z()};
         }
 
         m_prev_pt[0] = pt[0];
@@ -81,7 +79,7 @@ ossia::state_element ProcessExecutor::state(double t)
         m_prev_pt[2] = pt[2];
         m_prev_t = t;
 
-        return ossia::message{*m_addr, std::move(tuple), {}};
+        return ossia::message{*m_addr, std::move(vec), {}};
     }
 
     return {};

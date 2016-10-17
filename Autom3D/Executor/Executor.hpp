@@ -14,7 +14,7 @@ class DeviceList;
 }
 namespace State
 {
-struct Address;
+struct AddressAccessor;
 }
 namespace Engine { namespace Execution
 {
@@ -37,7 +37,7 @@ class ProcessExecutor final :
 {
     public:
         ProcessExecutor(
-                const State::Address& addr,
+                const State::AddressAccessor& addr,
                 const std::vector<Point>& spline,
                 const Device::DeviceList& devices,
                 Point scale,

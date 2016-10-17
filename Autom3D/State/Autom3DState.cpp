@@ -71,14 +71,14 @@ ProcessModel& ProcessState::process() const
 std::vector<State::AddressAccessor> ProcessState::matchingAddresses()
 {
     // TODO have a better check of "address validity"
-    if(!process().address().device.isEmpty())
+    if(!process().address().address.device.isEmpty())
         return {process().address()};
     return {};
 }
 
 ::State::MessageList ProcessState::messages() const
 {
-    if(!process().address().device.isEmpty())
+    if(!process().address().address.device.isEmpty())
     {
         auto mess = message();
         if(!mess.address.address.device.isEmpty())
