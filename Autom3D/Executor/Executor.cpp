@@ -18,10 +18,10 @@ static ossia::message make_message(
         const State::AddressAccessor& addr,
         const Device::DeviceList& devices)
 {
-    auto res = Engine::iscore_to_ossia::findAddress(devices, addr.address);
+    auto res = Engine::iscore_to_ossia::makeDestination(devices, addr);
     if(res)
     {
-        return ossia::message{{*res , addr.qualifiers.accessors}, {}, addr.qualifiers.unit};
+        return ossia::message{*res, {}};
     }
     else
     {
