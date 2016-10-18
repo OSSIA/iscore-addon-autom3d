@@ -18,45 +18,16 @@
 namespace Autom3D
 {
 ChangeAddress::ChangeAddress(
-        Path<ProcessModel> &&path,
-        const ::State::AddressAccessor &newval):
-    m_path{std::move(path)}, // TODO check for std::move everywhere
-    m_newAddress{newval}
+        const ProcessModel& autom,
+        const State::AddressAccessor &newval):
+    m_path{autom},
+    m_old{autom.address(), autom.min(), autom.max()},
+    m_new{Explorer::makeFullAddressAccessorSettings(
+              newval,
+              iscore::IDocument::documentContext(autom),
+              State::vec3f{0., 0., 0.},
+              State::vec3f{1., 1., 1.})}
 {
-    auto& autom = m_path.find();
-
-    // Get the current data.
-    m_oldAddress = autom.address();
-    m_oldDomain.min.val = autom.min();
-    m_oldDomain.max.val = autom.max();
-
-    if(auto deviceexplorer = Explorer::try_deviceExplorerFromObject(autom))
-    {
-        // Note : since we change the address, we also have to update the min / max if possible.
-        // To do this, we must go and check into the device explorer.
-        // If the node isn't found, we fallback on common values.
-
-        // Get the new data.
-        auto newpath = newval.address.path;
-        newpath.prepend(newval.address.device);
-        auto new_n = Device::try_getNodeFromString(deviceexplorer->rootNode(), std::move(newpath));
-        if(new_n)
-        {
-            ISCORE_ASSERT(new_n->is<Device::AddressSettings>());
-
-            auto& addr = new_n->get<Device::AddressSettings>();
-
-            m_newDomain = addr.domain;
-            if(!newval.qualifiers.unit)
-              m_newAddress.qualifiers.unit = addr.unit;
-        }
-        else
-        {
-            m_newAddress = newval;
-            m_newDomain.min.val = State::vec3f{0., 0., 0.};
-            m_newDomain.max.val = State::vec3f{1., 1., 1.};
-        }
-    }
 }
 
 
@@ -64,30 +35,30 @@ void ChangeAddress::undo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(State::convert::value<State::vec3f>(m_oldDomain.min));
-    autom.setMax(State::convert::value<State::vec3f>(m_oldDomain.max));
+    autom.setMin(State::convert::value<State::vec3f>(m_old.domain.min));
+    autom.setMax(State::convert::value<State::vec3f>(m_old.domain.max));
 
-    autom.setAddress(m_oldAddress);
+    autom.setAddress(m_old.address);
 }
 
 void ChangeAddress::redo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(State::convert::value<State::vec3f>(m_newDomain.min));
-    autom.setMax(State::convert::value<State::vec3f>(m_newDomain.max));
+    autom.setMin(State::convert::value<State::vec3f>(m_new.domain.min));
+    autom.setMax(State::convert::value<State::vec3f>(m_new.domain.max));
 
-    autom.setAddress(m_newAddress);
+    autom.setAddress(m_new.address);
 }
 
 void ChangeAddress::serializeImpl(DataStreamInput & s) const
 {
-    s << m_path << m_oldAddress << m_newAddress << m_oldDomain << m_newDomain;
+    s << m_path << m_old << m_new;
 }
 
 void ChangeAddress::deserializeImpl(DataStreamOutput & s)
 {
-    s >> m_path >> m_oldAddress >> m_newAddress >> m_oldDomain >> m_newDomain;
+    s >> m_path >> m_old >> m_new;
 }
 
 

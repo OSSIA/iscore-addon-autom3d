@@ -75,7 +75,7 @@ void Visitor<Reader<DataStream>>::readFrom_impl(const Autom3D::ProcessModel& aut
 template<>
 void Visitor<Writer<DataStream>>::writeTo(Autom3D::ProcessModel& autom)
 {
-    State::Address address;
+    State::AddressAccessor address;
     State::vec3f min, max, scale, origin;
     std::vector<State::vec3f> handles;
     bool useDerivative;
@@ -108,7 +108,7 @@ void Visitor<Reader<JSONObject>>::readFrom_impl(const Autom3D::ProcessModel& aut
 template<>
 void Visitor<Writer<JSONObject>>::writeTo(Autom3D::ProcessModel& autom)
 {
-    autom.setAddress(fromJsonObject<State::Address>(m_obj[strings.Address]));
+    autom.setAddress(fromJsonObject<State::AddressAccessor>(m_obj[strings.Address]));
     autom.setMin(fromJsonValue<State::vec3f>(m_obj[strings.Min]));
     autom.setMax(fromJsonValue<State::vec3f>(m_obj[strings.Max]));
     autom.setScale(fromJsonValue<State::vec3f>(m_obj["Scale"]));
