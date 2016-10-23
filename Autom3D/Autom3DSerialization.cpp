@@ -39,25 +39,6 @@ struct TSerializer<DataStream, std::vector<QVector3D>>
     }
 };
 
-// MOVEME
-template<>
-void Visitor<Reader<JSONValue>>::readFrom(const State::vec3f& pt)
-{
-    QJsonArray arr;
-    arr.push_back(pt[0]);
-    arr.push_back(pt[1]);
-    arr.push_back(pt[2]);
-    val = arr;
-}
-
-// MOVEME
-template<>
-void Visitor<Writer<JSONValue>>::writeTo(State::vec3f& pt)
-{
-    QJsonArray arr = val.toArray();
-    pt = State::vec3f{arr[0].toDouble(), arr[1].toDouble(), arr[2].toDouble()};
-}
-
 template<>
 void Visitor<Reader<DataStream>>::readFrom_impl(const Autom3D::ProcessModel& autom)
 {

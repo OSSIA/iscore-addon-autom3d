@@ -71,14 +71,14 @@ ossia::state_element ProcessExecutor::state(double t)
     ossia::Vec3f vec;
     if(!m_use_deriv)
     {
-        vec.value = {float(pt[0]) * m_scale[0] + m_origin[0],
+        vec = {float(pt[0]) * m_scale[0] + m_origin[0],
                      float(pt[1]) * m_scale[1] + m_origin[1],
                      float(pt[2]) * m_scale[2] + m_origin[2]};
     }
     else
     {
         double dt = t - m_prev_t;
-        vec.value = { float((pt[0] - m_prev_pt[0]) / dt) * m_scale[0],
+        vec = { float((pt[0] - m_prev_pt[0]) / dt) * m_scale[0],
                       float((pt[1] - m_prev_pt[1]) / dt) * m_scale[1],
                       float((pt[2] - m_prev_pt[2]) / dt) * m_scale[2]};
     }
@@ -88,7 +88,7 @@ ossia::state_element ProcessExecutor::state(double t)
     m_prev_pt[2] = pt[2];
     m_prev_t = t;
 
-    m_message.value = vec;
+    m_message.message_value = vec;
     return m_message;
 }
 

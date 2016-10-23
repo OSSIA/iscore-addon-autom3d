@@ -15,6 +15,7 @@
 #include <iscore/tools/ModelPath.hpp>
 #include <iscore/tools/ModelPathSerialization.hpp>
 #include <iscore/tools/TreeNode.hpp>
+#include <ossia/editor/value/value_conversion.hpp>
 namespace Autom3D
 {
 ChangeAddress::ChangeAddress(
@@ -35,8 +36,8 @@ void ChangeAddress::undo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(State::convert::value<State::vec3f>(m_old.domain.min));
-    autom.setMax(State::convert::value<State::vec3f>(m_old.domain.max));
+    autom.setMin(ossia::convert<ossia::Vec3f>(ossia::net::get_min(m_old.domain)));
+    autom.setMax(ossia::convert<ossia::Vec3f>(ossia::net::get_max(m_old.domain)));
 
     autom.setAddress(m_old.address);
 }
@@ -45,8 +46,8 @@ void ChangeAddress::redo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(State::convert::value<State::vec3f>(m_new.domain.min));
-    autom.setMax(State::convert::value<State::vec3f>(m_new.domain.max));
+    autom.setMin(ossia::convert<ossia::Vec3f>(ossia::net::get_min(m_new.domain)));
+    autom.setMax(ossia::convert<ossia::Vec3f>(ossia::net::get_max(m_new.domain)));
 
     autom.setAddress(m_new.address);
 }
