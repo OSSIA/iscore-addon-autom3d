@@ -36,8 +36,8 @@ void ChangeAddress::undo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(ossia::convert<ossia::Vec3f>(ossia::net::get_min(m_old.domain)));
-    autom.setMax(ossia::convert<ossia::Vec3f>(ossia::net::get_max(m_old.domain)));
+    autom.setMin(m_old.domain.convert_min<ossia::Vec3f>());
+    autom.setMax(m_old.domain.convert_max<ossia::Vec3f>());
 
     autom.setAddress(m_old.address);
 }
@@ -46,8 +46,8 @@ void ChangeAddress::redo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(ossia::convert<ossia::Vec3f>(ossia::net::get_min(m_new.domain)));
-    autom.setMax(ossia::convert<ossia::Vec3f>(ossia::net::get_max(m_new.domain)));
+    autom.setMin(m_new.domain.convert_min<ossia::Vec3f>());
+    autom.setMax(m_new.domain.convert_max<ossia::Vec3f>());
 
     autom.setAddress(m_new.address);
 }
