@@ -10,6 +10,10 @@ if(NOT TARGET iscore_plugin_engine)
 endif()
 
 find_package(Qt5 5.3 REQUIRED COMPONENTS Core Widgets OpenGL)
+# Disabled due to a conflicting symbol (libz / vtk)
+if(ISCORE_STATIC_PLUGINS)
+    return()
+endif()
 
 find_package(VTK COMPONENTS
   vtkCommonCore

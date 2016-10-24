@@ -142,7 +142,7 @@ void AutomWidget::release(vtkObject* obj)
     {
         double pt[3];
         pts.GetPoint(i, pt);
-        handles.push_back({pt[0], pt[1], pt[2]});
+        handles.push_back({float(pt[0]), float(pt[1]), float(pt[2])});
     }
 
     auto cmd = new UpdateSpline{m_proc, std::move(handles)};
