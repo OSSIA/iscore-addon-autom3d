@@ -1,7 +1,7 @@
 #include "Executor.hpp"
 #include <vtkParametricSpline.h>
 #include <vtkPoints.h>
-#include <iscore/tools/std/Algorithms.hpp>
+#include <ossia/detail/algorithms.hpp>
 #include <Device/Protocol/DeviceInterface.hpp>
 #include <Engine/iscore2OSSIA.hpp>
 #include <Engine/Protocols/OSSIADevice.hpp>
