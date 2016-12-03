@@ -5,6 +5,7 @@
 #include <iscore/document/DocumentContext.hpp>
 #include <iscore/document/DocumentInterface.hpp>
 #include <Autom3D/Point.hpp>
+#include <ossia/editor/state/message.hpp>
 
 class vtkParametricSpline;
 

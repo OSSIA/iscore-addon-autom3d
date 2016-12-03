@@ -15,7 +15,9 @@
 #include <iscore/tools/ModelPath.hpp>
 #include <iscore/tools/ModelPathSerialization.hpp>
 #include <iscore/tools/TreeNode.hpp>
+#include <ossia/network/domain/domain.hpp>
 #include <ossia/editor/value/value_conversion.hpp>
+#include <ossia/editor/value/value.hpp>
 namespace Autom3D
 {
 ChangeAddress::ChangeAddress(
@@ -26,8 +28,8 @@ ChangeAddress::ChangeAddress(
     m_new{Explorer::makeFullAddressAccessorSettings(
               newval,
               iscore::IDocument::documentContext(autom),
-              State::vec3f{0., 0., 0.},
-              State::vec3f{1., 1., 1.})}
+              std::array<float, 3>{0., 0., 0.},
+              std::array<float, 3>{1., 1., 1.})}
 {
 }
 
@@ -36,8 +38,9 @@ void ChangeAddress::undo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(m_old.domain.convert_min<ossia::Vec3f>());
-    autom.setMax(m_old.domain.convert_max<ossia::Vec3f>());
+    auto& dom = m_old.domain.get();
+    autom.setMin(dom.convert_min<std::array<float, 3>>());
+    autom.setMax(dom.convert_max<std::array<float, 3>>());
 
     autom.setAddress(m_old.address);
 }
@@ -46,8 +49,9 @@ void ChangeAddress::redo() const
 {
     auto& autom = m_path.find();
 
-    autom.setMin(m_new.domain.convert_min<ossia::Vec3f>());
-    autom.setMax(m_new.domain.convert_max<ossia::Vec3f>());
+    auto& dom = m_new.domain.get();
+    autom.setMin(dom.convert_min<std::array<float, 3>>());
+    autom.setMax(dom.convert_max<std::array<float, 3>>());
 
     autom.setAddress(m_new.address);
 }
