@@ -10,6 +10,10 @@ namespace iscore{
 class Document;
 struct DocumentContext;
 }
+namespace Device
+{
+class FullAddressAccessorSettings;
+}
 namespace State
 {
 struct Address;
@@ -34,7 +38,7 @@ class InspectorWidget final :
                 QWidget* parent);
 
     public slots:
-        void on_addressChange(const ::State::AddressAccessor& newText);
+        void on_addressChange(const Device::FullAddressAccessorSettings& newText);
 
     private:
         Explorer::AddressAccessorEditWidget* m_lineEdit{};
