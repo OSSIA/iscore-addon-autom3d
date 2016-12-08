@@ -30,9 +30,9 @@ iscore_plugin_autom3d::~iscore_plugin_autom3d()
 }
 
 
-std::vector<std::unique_ptr<iscore::FactoryInterfaceBase>> iscore_plugin_autom3d::factories(
+std::vector<std::unique_ptr<iscore::InterfaceBase>> iscore_plugin_autom3d::factories(
         const iscore::ApplicationContext& ctx,
-        const iscore::AbstractFactoryKey& key) const
+        const iscore::InterfaceKey& key) const
 {
     return instantiate_factories<
             iscore::ApplicationContext,
