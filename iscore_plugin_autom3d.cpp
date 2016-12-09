@@ -53,10 +53,10 @@ std::vector<std::unique_ptr<iscore::InterfaceBase>> iscore_plugin_autom3d::facto
     >>(ctx, key);
 }
 
-std::pair<const CommandParentFactoryKey, CommandGeneratorMap> iscore_plugin_autom3d::make_commands()
+std::pair<const CommandGroupKey, CommandGeneratorMap> iscore_plugin_autom3d::make_commands()
 {
     using namespace Autom3D;
-    std::pair<const CommandParentFactoryKey, CommandGeneratorMap> cmds{CommandFactoryName(), CommandGeneratorMap{}};
+    std::pair<const CommandGroupKey, CommandGeneratorMap> cmds{CommandFactoryName(), CommandGeneratorMap{}};
 
     using Types = TypeList<
 #include <iscore_plugin_autom3d_commands.hpp>

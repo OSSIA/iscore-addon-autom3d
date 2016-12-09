@@ -3,8 +3,8 @@
 
 namespace Autom3D
 {
-const CommandParentFactoryKey& CommandFactoryName() {
-    static const CommandParentFactoryKey key{"Autom3D"};
+const CommandGroupKey& CommandFactoryName() {
+    static const CommandGroupKey key{"Autom3D"};
     return key;
 }
 }

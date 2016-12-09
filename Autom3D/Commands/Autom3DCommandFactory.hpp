@@ -3,5 +3,5 @@
 
 namespace Autom3D
 {
-const CommandParentFactoryKey& CommandFactoryName();
+const CommandGroupKey& CommandFactoryName();
 }
