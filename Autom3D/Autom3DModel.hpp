@@ -16,7 +16,7 @@ class JSONObject;
 namespace Process { class LayerModel; }
 namespace Process { class ProcessModel; }
 class QObject;
-#include <iscore/tools/SettableIdentifier.hpp>
+#include <iscore/model/Identifier.hpp>
 #include <iscore_plugin_autom3d_export.h>
 
 

@@ -24,7 +24,7 @@
 
 #include <iscore/command/Dispatchers/CommandDispatcher.hpp>
 #include <iscore/document/DocumentInterface.hpp>
-#include <iscore/tools/ModelPath.hpp>
+#include <iscore/model/path/Path.hpp>
 #include <iscore/tools/Todo.hpp>
 #include <QCheckBox>
 

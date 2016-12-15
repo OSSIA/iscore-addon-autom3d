@@ -9,8 +9,8 @@
 #include <iscore/model/ModelMetadata.hpp>
 #include <State/Address.hpp>
 #include <Autom3D/State/Autom3DState.hpp>
-#include <iscore/tools/IdentifiedObjectMap.hpp>
-#include <iscore/tools/SettableIdentifier.hpp>
+#include <iscore/model/IdentifiedObjectMap.hpp>
+#include <iscore/model/Identifier.hpp>
 
 namespace Process { class LayerModel; }
 namespace Process { class ProcessModel; }

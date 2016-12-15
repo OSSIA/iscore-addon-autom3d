@@ -3,7 +3,7 @@
 #include <Autom3D/Point.hpp>
 #include <Device/Address/AddressSettings.hpp>
 #include <iscore/command/Command.hpp>
-#include <iscore/tools/ModelPath.hpp>
+#include <iscore/model/path/Path.hpp>
 
 struct DataStreamInput;
 struct DataStreamOutput;

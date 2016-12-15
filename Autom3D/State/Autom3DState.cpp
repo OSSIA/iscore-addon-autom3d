@@ -10,7 +10,7 @@
 #include <State/Message.hpp>
 #include <State/Value.hpp>
 #include <State/ValueConversion.hpp>
-#include <iscore/tools/IdentifiedObjectMap.hpp>
+#include <iscore/model/IdentifiedObjectMap.hpp>
 #include <iscore/tools/Todo.hpp>
 
 class QObject;
