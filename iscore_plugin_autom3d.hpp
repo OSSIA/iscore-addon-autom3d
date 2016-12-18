@@ -25,7 +25,7 @@ class iscore_plugin_autom3d final :
                 iscore::FactoryInterface_QtInterface
                 iscore::CommandFactory_QtInterface
                 )
-
+        ISCORE_PLUGIN_METADATA(1, "21f2eee9-5958-401d-a456-2e07b48063fb")
     public:
         iscore_plugin_autom3d();
         virtual ~iscore_plugin_autom3d();
@@ -38,7 +38,4 @@ class iscore_plugin_autom3d final :
 
         // CommandFactory_QtInterface interface
         std::pair<const CommandGroupKey, CommandGeneratorMap> make_commands() override;
-
-        iscore::Version version() const override;
-        UuidKey<iscore::Plugin> key() const override;
 };

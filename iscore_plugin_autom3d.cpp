@@ -36,7 +36,6 @@ std::vector<std::unique_ptr<iscore::InterfaceBase>> iscore_plugin_autom3d::facto
 {
     return instantiate_factories<
             iscore::ApplicationContext,
-    TL<
         FW<Process::ProcessModelFactory,
              Autom3D::ProcessFactory>,
         FW<Process::LayerFactory,
@@ -50,7 +49,7 @@ std::vector<std::unique_ptr<iscore::InterfaceBase>> iscore_plugin_autom3d::facto
              Autom3D::InspectorFactory>,
         FW<Engine::Execution::ProcessComponentFactory,
              Autom3D::Executor::ComponentFactory>
-    >>(ctx, key);
+    >(ctx, key);
 }
 
 std::pair<const CommandGroupKey, CommandGeneratorMap> iscore_plugin_autom3d::make_commands()
@@ -65,14 +64,3 @@ std::pair<const CommandGroupKey, CommandGeneratorMap> iscore_plugin_autom3d::mak
 
     return cmds;
 }
-
-iscore::Version iscore_plugin_autom3d::version() const
-{
-    return iscore::Version{1};
-}
-
-UuidKey<iscore::Plugin> iscore_plugin_autom3d::key() const
-{
-    return_uuid("21f2eee9-5958-401d-a456-2e07b48063fb");
-}
-
