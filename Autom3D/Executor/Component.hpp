@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Autom3D/Autom3DModel.hpp>
-#include <Engine/Executor/ProcessElement.hpp>
+#include <Engine/Executor/ProcessComponent.hpp>
 #include <Autom3D/Executor/Executor.hpp>
 namespace Autom3D
 {
