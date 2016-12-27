@@ -25,8 +25,7 @@ namespace Autom3D
 
 class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessModel
 {
-        ISCORE_SERIALIZE_FRIENDS(ProcessModel, DataStream)
-        ISCORE_SERIALIZE_FRIENDS(ProcessModel, JSONObject)
+        ISCORE_SERIALIZE_FRIENDS
         MODEL_METADATA_IMPL(Autom3D::ProcessModel)
 
         Q_OBJECT
@@ -44,7 +43,7 @@ class ISCORE_PLUGIN_AUTOM3D_EXPORT ProcessModel final : public Process::ProcessM
                      QObject* parent);
 
         template<typename Impl>
-        ProcessModel(Deserializer<Impl>& vis, QObject* parent) :
+        ProcessModel(Impl& vis, QObject* parent) :
             Process::ProcessModel{vis, parent},
             m_startState{new ProcessState{*this, 0., this}},
             m_endState{new ProcessState{*this, 1., this}}

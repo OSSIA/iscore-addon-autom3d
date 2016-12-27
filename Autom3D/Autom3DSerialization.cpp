@@ -39,8 +39,8 @@ struct TSerializer<DataStream, std::vector<QVector3D>>
     }
 };
 
-template<>
-void Visitor<Reader<DataStream>>::readFrom_impl(const Autom3D::ProcessModel& autom)
+template <>
+void DataStreamReader::read(const Autom3D::ProcessModel& autom)
 {
     m_stream << autom.address();
     m_stream << autom.handles();
@@ -53,8 +53,8 @@ void Visitor<Reader<DataStream>>::readFrom_impl(const Autom3D::ProcessModel& aut
     insertDelimiter();
 }
 
-template<>
-void Visitor<Writer<DataStream>>::writeTo(Autom3D::ProcessModel& autom)
+template <>
+void DataStreamWriter::writeTo(Autom3D::ProcessModel& autom)
 {
     State::AddressAccessor address;
     State::vec3f min, max, scale, origin;
@@ -74,27 +74,27 @@ void Visitor<Writer<DataStream>>::writeTo(Autom3D::ProcessModel& autom)
     checkDelimiter();
 }
 
-template<>
-void Visitor<Reader<JSONObject>>::readFrom_impl(const Autom3D::ProcessModel& autom)
+template <>
+void JSONObjectReader::read(const Autom3D::ProcessModel& autom)
 {
-    m_obj[strings.Address] = toJsonObject(autom.address());
-    m_obj[strings.Min] = toJsonValue(autom.min());
-    m_obj[strings.Max] = toJsonValue(autom.max());
-    m_obj["Scale"] = toJsonValue(autom.scale());
-    m_obj["Origin"] = toJsonValue(autom.origin());
-    m_obj["Derivative"] = autom.useDerivative();
-    m_obj["Handles"] = toJsonValueArray(autom.handles());
+    obj[strings.Address] = toJsonObject(autom.address());
+    obj[strings.Min] = toJsonValue(autom.min());
+    obj[strings.Max] = toJsonValue(autom.max());
+    obj["Scale"] = toJsonValue(autom.scale());
+    obj["Origin"] = toJsonValue(autom.origin());
+    obj["Derivative"] = autom.useDerivative();
+    obj["Handles"] = toJsonValueArray(autom.handles());
 }
 
-template<>
-void Visitor<Writer<JSONObject>>::writeTo(Autom3D::ProcessModel& autom)
+template <>
+void JSONObjectWriter::writeTo(Autom3D::ProcessModel& autom)
 {
-    autom.setAddress(fromJsonObject<State::AddressAccessor>(m_obj[strings.Address]));
-    autom.setMin(fromJsonValue<State::vec3f>(m_obj[strings.Min]));
-    autom.setMax(fromJsonValue<State::vec3f>(m_obj[strings.Max]));
-    autom.setScale(fromJsonValue<State::vec3f>(m_obj["Scale"]));
-    autom.setOrigin(fromJsonValue<State::vec3f>(m_obj["Origin"]));
-    autom.setUseDerivative(m_obj["Derivative"].toBool());
+    autom.setAddress(fromJsonObject<State::AddressAccessor>(obj[strings.Address]));
+    autom.setMin(fromJsonValue<State::vec3f>(obj[strings.Min]));
+    autom.setMax(fromJsonValue<State::vec3f>(obj[strings.Max]));
+    autom.setScale(fromJsonValue<State::vec3f>(obj["Scale"]));
+    autom.setOrigin(fromJsonValue<State::vec3f>(obj["Origin"]));
+    autom.setUseDerivative(obj["Derivative"].toBool());
 
-    autom.setHandles(fromJsonValueArray<std::vector<State::vec3f>>(m_obj["Handles"].toArray()));
+    autom.setHandles(fromJsonValueArray<std::vector<State::vec3f>>(obj["Handles"].toArray()));
 }
