@@ -54,7 +54,7 @@ void DataStreamReader::read(const Autom3D::ProcessModel& autom)
 }
 
 template <>
-void DataStreamWriter::writeTo(Autom3D::ProcessModel& autom)
+void DataStreamWriter::write(Autom3D::ProcessModel& autom)
 {
     State::AddressAccessor address;
     State::vec3f min, max, scale, origin;
@@ -87,7 +87,7 @@ void JSONObjectReader::read(const Autom3D::ProcessModel& autom)
 }
 
 template <>
-void JSONObjectWriter::writeTo(Autom3D::ProcessModel& autom)
+void JSONObjectWriter::write(Autom3D::ProcessModel& autom)
 {
     autom.setAddress(fromJsonObject<State::AddressAccessor>(obj[strings.Address]));
     autom.setMin(fromJsonValue<State::vec3f>(obj[strings.Min]));
