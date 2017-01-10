@@ -10,35 +10,6 @@
 #include <iscore/serialization/JSONValueVisitor.hpp>
 #include <iscore/serialization/VisitorCommon.hpp>
 
-// MOVEME
-template<>
-struct TSerializer<DataStream, std::vector<QVector3D>>
-{
-    static void readFrom(
-            DataStream::Serializer& s,
-            const std::vector<QVector3D>& vec)
-    {
-        s.stream() << (int32_t)vec.size();
-        for(const auto& elt : vec)
-            s.stream() << elt;
-    }
-
-    static void writeTo(
-            DataStream::Deserializer& s,
-            std::vector<QVector3D>& vec)
-    {
-        int32_t n = 0;
-        s.stream() >> n;
-
-        vec.clear();
-        vec.resize(n);
-        for(int i = 0; i < n; i++)
-        {
-            s.stream() >> vec[i];
-        }
-    }
-};
-
 template <>
 void DataStreamReader::read(const Autom3D::ProcessModel& autom)
 {
