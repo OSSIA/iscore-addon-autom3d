@@ -68,7 +68,7 @@ ossia::state_element ProcessExecutor::state(double t)
     double du[9];
     m_spline->Evaluate(u, pt, du);
 
-    ossia::Vec3f vec;
+    ossia::vec3f vec;
     if(!m_use_deriv)
     {
         vec = {float(pt[0]) * m_scale[0] + m_origin[0],
