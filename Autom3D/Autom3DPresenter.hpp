@@ -27,9 +27,9 @@ class LayerPresenter final :
 
         void parentGeometryChanged() override;
 
-        const Layer& layerModel() const override;
+        const Layer& model() const override;
         const ProcessModel& processModel() const
-        { return static_cast<ProcessModel&>(m_layer.processModel()); }
+        { return static_cast<ProcessModel&>(m_layer); }
         const Id<Process::ProcessModel>& modelId() const override;
 
     private:

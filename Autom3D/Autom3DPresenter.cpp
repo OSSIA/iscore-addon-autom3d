@@ -49,7 +49,7 @@ void LayerPresenter::parentGeometryChanged()
 {
 }
 
-const Layer& LayerPresenter::layerModel() const
+const Layer& LayerPresenter::model() const
 {
     return m_layer;
 }
