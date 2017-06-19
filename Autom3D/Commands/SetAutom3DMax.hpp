@@ -12,8 +12,8 @@ class SetMin final : public iscore::PropertyCommand
         ISCORE_COMMAND_DECL(CommandFactoryName(), SetMin, "Set curve minimum")
     public:
 
-        SetMin(Path<ProcessModel>&& path, State::vec3f newval):
-            iscore::PropertyCommand{std::move(path), "min", QVariant::fromValue(newval)}
+        SetMin(const ProcessModel& path, State::vec3f newval):
+            iscore::PropertyCommand{path, "min", QVariant::fromValue(newval)}
         {
 
         }
@@ -24,8 +24,8 @@ class SetMax final : public iscore::PropertyCommand
         ISCORE_COMMAND_DECL(CommandFactoryName(), SetMax, "Set curve maximum")
         public:
 
-        SetMax(Path<ProcessModel>&& path, State::vec3f newval):
-            iscore::PropertyCommand{std::move(path), "max", QVariant::fromValue(newval)}
+        SetMax(const ProcessModel& path, State::vec3f newval):
+            iscore::PropertyCommand{path, "max", QVariant::fromValue(newval)}
         {
 
         }
@@ -36,8 +36,8 @@ class SetScale final : public iscore::PropertyCommand
         ISCORE_COMMAND_DECL(CommandFactoryName(), SetScale, "Set curve scale")
         public:
 
-        SetScale(Path<ProcessModel>&& path, State::vec3f newval):
-            iscore::PropertyCommand{std::move(path), "scale", QVariant::fromValue(newval)}
+        SetScale(const ProcessModel& path, State::vec3f newval):
+            iscore::PropertyCommand{path, "scale", QVariant::fromValue(newval)}
         {
 
         }
@@ -48,8 +48,8 @@ class SetOrigin final : public iscore::PropertyCommand
         ISCORE_COMMAND_DECL(CommandFactoryName(), SetOrigin, "Set curve origin")
         public:
 
-        SetOrigin(Path<ProcessModel>&& path, State::vec3f newval):
-            iscore::PropertyCommand{std::move(path), "origin", QVariant::fromValue(newval)}
+        SetOrigin(const ProcessModel& path, State::vec3f newval):
+            iscore::PropertyCommand{path, "origin", QVariant::fromValue(newval)}
         {
 
         }
@@ -61,8 +61,8 @@ class SetUseDerivative final : public iscore::PropertyCommand
         ISCORE_COMMAND_DECL(CommandFactoryName(), SetUseDerivative, "Set curve derivative mode")
         public:
 
-        SetUseDerivative(Path<ProcessModel>&& path, bool newval):
-            iscore::PropertyCommand{std::move(path), "useDerivative", QVariant::fromValue(newval)}
+        SetUseDerivative(const ProcessModel& path, bool newval):
+            iscore::PropertyCommand{path, "useDerivative", QVariant::fromValue(newval)}
         {
 
         }

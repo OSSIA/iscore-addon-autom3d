@@ -23,8 +23,8 @@ class ChangeAddress final : public iscore::Command
                 const State::AddressAccessor& newval);
 
     public:
-        void undo() const override;
-        void redo() const override;
+        void undo(const iscore::DocumentContext& ctx) const override;
+        void redo(const iscore::DocumentContext& ctx) const override;
 
     protected:
         void serializeImpl(DataStreamInput &) const override;
@@ -40,13 +40,13 @@ class UpdateSpline final : public iscore::Command
 {
         ISCORE_COMMAND_DECL(CommandFactoryName(), UpdateSpline, "UpdateSpline")
     public:
-        UpdateSpline(
-                Path<ProcessModel>&& path,
-                std::vector<State::vec3f>&& newHandles);
+          UpdateSpline(
+            const ProcessModel& model,
+            std::vector<State::vec3f>&& newHandles);
 
     public:
-        void undo() const override;
-        void redo() const override;
+        void undo(const iscore::DocumentContext& ctx) const override;
+        void redo(const iscore::DocumentContext& ctx) const override;
 
     protected:
         void serializeImpl(DataStreamInput &) const override;

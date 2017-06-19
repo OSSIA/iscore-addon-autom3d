@@ -34,9 +34,9 @@ ChangeAddress::ChangeAddress(
 }
 
 
-void ChangeAddress::undo() const
+void ChangeAddress::undo(const iscore::DocumentContext& ctx) const
 {
-    auto& autom = m_path.find();
+    auto& autom = m_path.find(ctx);
 
     auto& dom = m_old.domain.get();
     autom.setMin(dom.convert_min<std::array<float, 3>>());
@@ -45,9 +45,9 @@ void ChangeAddress::undo() const
     autom.setAddress(m_old.address);
 }
 
-void ChangeAddress::redo() const
+void ChangeAddress::redo(const iscore::DocumentContext& ctx) const
 {
-    auto& autom = m_path.find();
+    auto& autom = m_path.find(ctx);
 
     auto& dom = m_new.domain.get();
     autom.setMin(dom.convert_min<std::array<float, 3>>());
@@ -70,26 +70,25 @@ void ChangeAddress::deserializeImpl(DataStreamOutput & s)
 
 
 UpdateSpline::UpdateSpline(
-        Path<ProcessModel> &&path,
+        const ProcessModel& model,
         std::vector<State::vec3f>&& newHandles):
-    m_path{std::move(path)},
+    m_path{path},
     m_new{std::move(newHandles)}
 {
-    auto& autom = m_path.find();
-    m_old = autom.handles();
+    m_old = model.handles();
 }
 
 
-void UpdateSpline::undo() const
+void UpdateSpline::undo(const iscore::DocumentContext& ctx) const
 {
-    auto& autom = m_path.find();
+    auto& autom = m_path.find(ctx);
 
     autom.setHandles(m_old);
 }
 
-void UpdateSpline::redo() const
+void UpdateSpline::redo(const iscore::DocumentContext& ctx) const
 {
-    auto& autom = m_path.find();
+    auto& autom = m_path.find(ctx);
 
     autom.setHandles(m_new);
 }
